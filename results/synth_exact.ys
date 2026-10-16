@@ -1,0 +1,8 @@
+
+read_verilog C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/structural_multiplier.v
+synth -top structural_multiplier
+flatten
+opt
+abc -g gates
+stat
+ltp

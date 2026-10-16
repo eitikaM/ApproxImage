@@ -1,0 +1,20 @@
+[*]
+[*] GTKWave Analyzer Save File
+[*]
+[dumpfile] "mode_comparison.vcd"
+[timestart] 0
+[size] 1280 720
+[pos] -1 -1
+*-13.000000 15000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] mode_comparison_testbench.
+@24
++{A [7:0]} mode_comparison_testbench.A[7:0]
++{B [7:0]} mode_comparison_testbench.B[7:0]
+@28
++{mode [1:0]} mode_comparison_testbench.mode[1:0]
+@24
++{P_exact [15:0]} mode_comparison_testbench.P_exact[15:0]
++{P_approx [15:0]} mode_comparison_testbench.P_approx[15:0]
++{abs_error [15:0]} mode_comparison_testbench.abs_error[15:0]
+[pattern_trace] 1
+[pattern_trace] 0

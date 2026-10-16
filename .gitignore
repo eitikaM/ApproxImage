@@ -1,0 +1,21 @@
+# Ignore large simulation waveform dumps (approximate_waveform.vcd is 121MB, GitHub limit is 100MB)
+verilog/approximate_waveform.vcd
+*.vcd
+!verilog/mode_comparison.vcd
+
+# Compiled simulation binaries
+verilog/*_sim
+test_chk
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+env/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

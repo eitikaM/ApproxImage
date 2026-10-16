@@ -1,0 +1,6 @@
+Design,Top,Total Cells,Logic Cells,AND,NAND,OR,NOR,XOR,XNOR,NOT,ANDNOT,ORNOT,MUX,Wires,Wire Bits,LTP (Gate Levels)
+Exact (Structural CSA),structural_multiplier,430,366,91,165,47,0,6,49,1,4,3,0,1094,1285,40
+Fixed Mode 1 (Low Approx),synthesis_mode1,418,353,82,166,45,2,7,44,1,3,3,0,1183,1481,41
+Fixed Mode 2 (Med Approx),synthesis_mode2,382,317,79,132,32,2,9,43,2,5,13,0,1144,1442,34
+Fixed Mode 3 (High Approx),synthesis_mode3,327,262,60,123,22,1,10,29,5,5,7,0,1089,1387,29
+Configurable (Runtime Mode),approximate_multiplier,495,431,107,189,58,12,2,46,0,8,9,0,1264,1533,41

@@ -1,0 +1,27 @@
+======================================================================================
+                 YOSYS HARDWARE SYNTHESIS EVALUATION REPORT
+======================================================================================
+
+Note: Synthesized cell count and topological path length represent
+synthesis-level logic resource usage and combinational delay proxies.
+Power estimation is not available in the current synthesis flow.
+
+Design                       | Logic Cells | Reduction (%) | LTP (Levels) | Wires 
+--------------------------------------------------------------------------------------
+Exact (Structural CSA)       | 366         | Baseline (0.00%) | 40           | 1094  
+Fixed Mode 1 (Low Approx)    | 353         | +3.55%        | 41           | 1183  
+Fixed Mode 2 (Med Approx)    | 317         | +13.39%       | 34           | 1144  
+Fixed Mode 3 (High Approx)   | 262         | +28.42%       | 29           | 1089  
+Configurable (Runtime Mode)  | 431         | -17.76%       | 41           | 1264  
+--------------------------------------------------------------------------------------
+
+DETAILED GATE-LEVEL BREAKDOWN:
+--------------------------------------------------------------------------------------
+Design                       | AND   | NAND  | OR    | XOR   | XNOR  | NOT   | ANDNOT | MUX 
+--------------------------------------------------------------------------------------
+Exact (Structural CSA)       | 91    | 165   | 47    | 6     | 49    | 1     | 4      | 0   
+Fixed Mode 1 (Low Approx)    | 82    | 166   | 45    | 7     | 44    | 1     | 3      | 0   
+Fixed Mode 2 (Med Approx)    | 79    | 132   | 32    | 9     | 43    | 2     | 5      | 0   
+Fixed Mode 3 (High Approx)   | 60    | 123   | 22    | 10    | 29    | 5     | 5      | 0   
+Configurable (Runtime Mode)  | 107   | 189   | 58    | 2     | 46    | 0     | 8      | 0   
+--------------------------------------------------------------------------------------
