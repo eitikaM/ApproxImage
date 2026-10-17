@@ -1,0 +1,142 @@
+================================================================================
+STEP 2 VERIFICATION REPORT: CLASSIFIER THRESHOLDS, BLUR STRINGS & VERIFIED REPORT
+================================================================================
+
+FAILURES / PARTS NOT COMPLETED:
+none
+
+================================================================================
+PART 1: CLASSIFIER VS SSIM THRESHOLD EVALUATION
+================================================================================
+
+Evaluation Setup:
+- Images:
+  1. sample_photo: images/sample_photo.png (grayscale via load_image)
+  2. smooth_gradient: synthetic 256x256 np.clip(0.5*x + 0.3*y, 0, 255).astype(np.uint8)
+- Effects: blur, sharpen
+- Thresholds: 0.99, 0.98, 0.95, 0.90
+- Classifier: AdaptiveInferenceEngine (Random Forest safety classifier, results/ml/trained_model.joblib)
+- Decision Logic: Exact implementation from python/app.py (AI Recommended):
+    P(unsafe) < threshold -> evaluate Mode 3; if SSIM >= target_ssim select Mode 3;
+    else evaluate Mode 2; if SSIM >= target_ssim select Mode 2;
+    else evaluate Mode 1; if SSIM >= target_ssim select Mode 1;
+    else fallback to Mode 0.
+
+CLASSIFIER VS SSIM THRESHOLD SUMMARY TABLE (16 RUNS):
++-----------------+---------+----------------+--------------------+--------------------+---------------+-------------------------+--------------------+---------------------------------------------------------------+
+| Image           | Effect  | SSIM Threshold | Probability Unsafe | Decision Threshold | Mode Selected | Measured SSIM (Selected)| Measured SSIM (M3) | Mode 3 skipped by classifier although Mode 3 SSIM >= threshold|
++-----------------+---------+----------------+--------------------+--------------------+---------------+-------------------------+--------------------+---------------------------------------------------------------+
+| sample_photo    | blur    | 0.99           | 0.7990             | 0.0700             | Mode 2        | 0.99736                 | 0.98888            | no (M3 SSIM 0.98888 < 0.99)                                   |
+| sample_photo    | blur    | 0.98           | 0.7990             | 0.0700             | Mode 2        | 0.99736                 | 0.98888            | yes (M3 SSIM 0.98888 >= 0.98, bypassed: P(unsafe) 0.80 >= 0.07)|
+| sample_photo    | blur    | 0.95           | 0.7990             | 0.0700             | Mode 2        | 0.99736                 | 0.98888            | yes (M3 SSIM 0.98888 >= 0.95, bypassed: P(unsafe) 0.80 >= 0.07)|
+| sample_photo    | blur    | 0.90           | 0.7990             | 0.0700             | Mode 2        | 0.99736                 | 0.98888            | yes (M3 SSIM 0.98888 >= 0.90, bypassed: P(unsafe) 0.80 >= 0.07)|
+| sample_photo    | sharpen | 0.99           | 0.4772             | 0.0700             | Mode 2        | 0.99821                 | 0.99502            | yes (M3 SSIM 0.99502 >= 0.99, bypassed: P(unsafe) 0.48 >= 0.07)|
+| sample_photo    | sharpen | 0.98           | 0.4772             | 0.0700             | Mode 2        | 0.99821                 | 0.99502            | yes (M3 SSIM 0.99502 >= 0.98, bypassed: P(unsafe) 0.48 >= 0.07)|
+| sample_photo    | sharpen | 0.95           | 0.4772             | 0.0700             | Mode 2        | 0.99821                 | 0.99502            | yes (M3 SSIM 0.99502 >= 0.95, bypassed: P(unsafe) 0.48 >= 0.07)|
+| sample_photo    | sharpen | 0.90           | 0.4772             | 0.0700             | Mode 2        | 0.99821                 | 0.99502            | yes (M3 SSIM 0.99502 >= 0.90, bypassed: P(unsafe) 0.48 >= 0.07)|
+| smooth_gradient | blur    | 0.99           | 0.9904             | 0.0700             | Mode 2        | 0.99303                 | 0.96664            | no (M3 SSIM 0.96664 < 0.99)                                   |
+| smooth_gradient | blur    | 0.98           | 0.9904             | 0.0700             | Mode 2        | 0.99303                 | 0.96664            | no (M3 SSIM 0.96664 < 0.98)                                   |
+| smooth_gradient | blur    | 0.95           | 0.9904             | 0.0700             | Mode 2        | 0.99303                 | 0.96664            | yes (M3 SSIM 0.96664 >= 0.95, bypassed: P(unsafe) 0.99 >= 0.07)|
+| smooth_gradient | blur    | 0.90           | 0.9904             | 0.0700             | Mode 2        | 0.99303                 | 0.96664            | yes (M3 SSIM 0.96664 >= 0.90, bypassed: P(unsafe) 0.99 >= 0.07)|
+| smooth_gradient | sharpen | 0.99           | 0.9846             | 0.0700             | Mode 2        | 0.99621                 | 0.98209            | no (M3 SSIM 0.98209 < 0.99)                                   |
+| smooth_gradient | sharpen | 0.98           | 0.9846             | 0.0700             | Mode 2        | 0.99621                 | 0.98209            | yes (M3 SSIM 0.98209 >= 0.98, bypassed: P(unsafe) 0.98 >= 0.07)|
+| smooth_gradient | sharpen | 0.95           | 0.9846             | 0.0700             | Mode 2        | 0.99621                 | 0.98209            | yes (M3 SSIM 0.98209 >= 0.95, bypassed: P(unsafe) 0.98 >= 0.07)|
+| smooth_gradient | sharpen | 0.90           | 0.9846             | 0.0700             | Mode 2        | 0.99621                 | 0.98209            | yes (M3 SSIM 0.98209 >= 0.90, bypassed: P(unsafe) 0.98 >= 0.07)|
++-----------------+---------+----------------+--------------------+--------------------+---------------+-------------------------+--------------------+---------------------------------------------------------------+
+
+Classifier Training Code and SSIM Threshold:
+In python/generate_adaptive_dataset.py:
+Line 51:
+    SSIM_QUALITY_THRESHOLD = 0.99
+Lines 499-520:
+    meets_target = bool(ssim >= SSIM_QUALITY_THRESHOLD)
+    ...
+    # 2. Determine best mode:
+    # Highest approximation mode (3 down to 0) satisfying SSIM >= 0.99
+    best_mode = 0
+    for cand_mode in [3, 2, 1, 0]:
+        if mode_results[cand_mode]["meets_target"]:
+            best_mode = cand_mode
+            break
+
+In python/train_adaptive_selector.py:
+Lines 132-135:
+    # Formulate binary safety target:
+    # 0 = Mode 3 is Safe (best_mode == 3, SSIM >= 0.99)
+    # 1 = Mode 3 is Unsafe, fall back to Mode 2 (best_mode == 2, SSIM < 0.99)
+    tasks["unsafe"] = (tasks["best_mode"] == 2).astype(int)
+Lines 357-360:
+    best_config = candidate_configs[2]  # Random Forest
+    final_rf = RandomForestClassifier(n_estimators=100, max_depth=6, class_weight={0: 1, 1: 8}, random_state=42)
+    final_rf.fit(X, y)
+
+State of Training Threshold:
+The training labels used strictly SSIM >= 0.99. Because the model predicts the probability of violating the 0.99 constraint, its posterior probability P(unsafe) is static with respect to the user's runtime threshold choice. When the user lowers the threshold to 0.98, 0.95, or 0.90 in the UI, the classifier still predicts Mode 3 as "unsafe" because P(unsafe) exceeds the conservative 0.07 cutoff, skipping Mode 3 even when Mode 3 actually satisfies the relaxed threshold.
+
+================================================================================
+PART 2: 'BLUR' STRINGS IN python/app.py
+================================================================================
+
+All 6 lines containing 'blur' (case-insensitive) in python/app.py:
+
+Line 151:
+    - For color input with Blur or Sharpen:
+Classification: label (docstring / function documentation)
+
+Line 163:
+    if is_color and effect_key in ("blur", "sharpen"):
+Classification: key mapping (internal filter key membership check)
+
+Line 786:
+    st.session_state["effect_key"] = "blur"
+Classification: default value (session state initialization for active effect key)
+
+Line 788:
+    st.session_state["effect_label"] = "Blur"
+Classification: default value (session state initialization for display label)
+
+Line 879:
+        effect_opts = ["Blur", "Edge Detection", "Sharpen", "Emboss"]
+Classification: label (UI radio button option text)
+
+Line 892:
+            "Blur": "blur",
+Classification: key mapping (dictionary mapping UI display label to internal effect key)
+
+Note: There are 0 hardcoded 'blur' filenames in python/app.py. Download filenames dynamically use f"approximage_mode{res['mode']}_{res['effect_key']}.png" (lines 1296, 1305).
+
+================================================================================
+PART 3: VERIFIED REPORT GENERATED BY SCRIPT
+================================================================================
+
+Script: python/make_verified_report.py
+Generated Report: results/reports/verified_results.md
+
+Report Contents:
+1. Multiplier Arithmetic Error Analysis:
+   - Mode 0: 0/65,536 errors (0.00%), max error 0, mean error 0.000
+   - Mode 1: 11,264/65,536 errors (17.19%), max error 10, mean error 0.812
+   - Mode 2: 30,400/65,536 errors (46.39%), max error 98, mean error 11.141
+   - Mode 3: 46,628/65,536 errors (71.15%), max error 642, mean error 89.379
+2. Image Pipeline Quality Evaluation (sample_photo.png):
+   - 16 rows covering Blur, Edge, Sharpen, Emboss across Modes 0-3 with differing pixels, max delta, MSE, PSNR, SSIM, and SSIM >= 0.99.
+3. Hardware Synthesis Results (Yosys 0.66):
+   - Exact Mode 0 (structural_multiplier): 366 cells, LTP 40
+   - Mode 0 Same RTL Wrapper (synthesis_mode0_same_rtl): 366 cells, LTP 40
+   - Fixed Mode 1 (synthesis_mode1): 353 cells (-3.55%), LTP 41
+   - Fixed Mode 2 (synthesis_mode2): 317 cells (-13.39%), LTP 34
+   - Fixed Mode 3 (synthesis_mode3): 262 cells (-28.42%), LTP 29
+   - Runtime-Configurable (approximate_multiplier / net_configurable): 431 cells (+17.76% overhead), LTP 41
+4. Gate-Level Netlist Verification:
+   - All 5 netlist simulations (Modes 0, 1, 2, 3 and configurable) executed live via vvp with 0 mismatches vs RTL and 0 mismatches vs LUT.
+5. Limitations Section:
+   - Clarifies generic gate count vs physical PDK area/power/speed.
+   - Explains LTP as topological gate depth rather than STA delay.
+   - Highlights that fixed-mode savings (-3.55% to -28.42%) do not apply to the configurable design (+17.76% overhead).
+   - Explains Edge Detection invariance due to power-of-two kernel coefficients (16, 32, 192).
+
+================================================================================
+PYTEST RESULT
+================================================================================
+============================= 14 passed in 14.47s =============================
+================================================================================
