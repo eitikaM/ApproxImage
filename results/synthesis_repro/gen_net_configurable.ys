@@ -1,0 +1,9 @@
+read_verilog C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/structural_multiplier.v C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/approximate_multiplier.v
+synth -top approximate_multiplier
+flatten
+opt
+abc -g gates
+rename -top net_configurable
+write_verilog -noattr C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/results/synthesis_repro/net_configurable.v
+stat
+ltp

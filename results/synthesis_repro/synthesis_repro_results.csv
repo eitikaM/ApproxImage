@@ -1,0 +1,5 @@
+mode,design_top,total_cells,scopeinfo_cells,logic_cells,reduction_pct,critical_path_ltp,wires
+0,structural_multiplier,430,64,366,0.00,40,1094
+1,synthesis_mode1,418,65,353,3.55,41,1183
+2,synthesis_mode2,382,65,317,13.39,34,1144
+3,synthesis_mode3,327,65,262,28.42,29,1089

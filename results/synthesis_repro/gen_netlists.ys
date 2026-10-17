@@ -1,0 +1,40 @@
+# Generate post-synthesis gate-level netlists for Modes 0-3
+
+# Mode 0
+read_verilog C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/structural_multiplier.v
+synth -top structural_multiplier
+flatten
+opt
+abc -g gates
+rename -top net_mode0
+write_verilog -noattr C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/results/synthesis_repro/net_mode0.v
+
+# Mode 1
+design -reset
+read_verilog C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/structural_multiplier.v C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/approximate_multiplier.v C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/synthesis_mode1.v
+synth -top synthesis_mode1
+flatten
+opt
+abc -g gates
+rename -top net_mode1
+write_verilog -noattr C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/results/synthesis_repro/net_mode1.v
+
+# Mode 2
+design -reset
+read_verilog C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/structural_multiplier.v C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/approximate_multiplier.v C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/synthesis_mode2.v
+synth -top synthesis_mode2
+flatten
+opt
+abc -g gates
+rename -top net_mode2
+write_verilog -noattr C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/results/synthesis_repro/net_mode2.v
+
+# Mode 3
+design -reset
+read_verilog C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/structural_multiplier.v C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/approximate_multiplier.v C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/verilog/synthesis_mode3.v
+synth -top synthesis_mode3
+flatten
+opt
+abc -g gates
+rename -top net_mode3
+write_verilog -noattr C:/Users/ASUS/OneDrive/Desktop/final_year/approximate_multipliers/results/synthesis_repro/net_mode3.v
