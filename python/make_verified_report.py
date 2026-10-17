@@ -269,8 +269,8 @@ def build_markdown_report():
 3. **Configurable Design Overhead vs. Fixed-Mode Savings**:
    The fixed-mode cell reductions (-3.55% for Mode 1, -13.39% for Mode 2, -28.42% for Mode 3) are realized ONLY when the mode is permanently tied high/low at synthesis time, enabling Yosys dead-code elimination to prune redundant logic. In contrast, the **Runtime-Configurable** multiplier (`approximate_multiplier`, 431 logic cells, depth 41) requires runtime multiplexing trees and multi-mode partial-product routing, making it **65 cells larger (+17.76% overhead)** than the dedicated 366-cell exact baseline.
 
-4. **Edge Detection Invariance Under Approximation**:
-   Across all approximate modes (Modes 1, 2, and 3), Edge Detection produces identically zero error (MSE = 0.0000, SSIM = 1.0000). This occurs because the Edge Detection filter kernel consists exclusively of coefficients that are exact powers of two (16 = $2^4$, 32 = $2^5$, 192 = $2^7 + 2^6$). Consequently, all partial product bits fall in column positions $\ge 4$, leaving column 0..2 (Mode 1), 0..4 (Mode 2), and 0..6 (Mode 3) zero or unperturbed by the lower-part OR reduction logic.
+4. **Edge Detection Invariance and Arithmetic Overlap in Approximate Columns**:
+   OR equals addition unless two or more partial products fall in the same approximated column. Coefficients with a single set bit (16, 32, 64, 128) give one partial-product row, so the result is exact. 192 = 128+64 overlaps only from column 7 upward, outside Mode 3's approximated range (columns 0-6). Emboss coefficient 48 = 32+16 overlaps in columns 5-6, which is why only Mode 3 shows error.
 """)
 
     report_text = "\n".join(md)

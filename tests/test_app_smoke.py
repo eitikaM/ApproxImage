@@ -175,3 +175,49 @@ def test_app_smooth_gradient_ai_recommended(target_thresh):
                 f"At 0.95, displayed Mode 3 SSIM is {displayed_m3_ssim:.4f} >= 0.95, but app selected Mode {selected_mode}"
             )
 
+
+def test_app_rgb_gradient_ai_recommended_095():
+    """
+    AppTest verification on synthetic 256x256 3-channel RGB gradient with Blur & AI Recommended (threshold 0.95):
+    - Uploads 256x256 RGB gradient PNG with 3 different channel gradients
+    - Selects Blur, AI Recommended, threshold 0.95 (widgets by label)
+    - Asserts no exception
+    - Asserts that the selected mode's displayed SSIM >= 0.95 or mode is 0
+    """
+    y, x = np.ogrid[:256, :256]
+    r_ch = np.clip(0.5 * x + 0.3 * y, 0, 255).astype(np.uint8)
+    g_ch = np.clip(0.2 * x + 0.7 * y, 0, 255).astype(np.uint8)
+    b_ch = np.clip(0.8 * x + 0.1 * y, 0, 255).astype(np.uint8)
+    rgb_arr = np.stack([b_ch, g_ch, r_ch], axis=-1)  # BGR for OpenCV PNG encoding
+    success, png_bytes = cv2.imencode(".png", rgb_arr)
+    assert success, "Failed to encode RGB gradient to PNG bytes"
+    rgb_data = png_bytes.tobytes()
+
+    at = AppTest.from_file(APP_PATH, default_timeout=45).run()
+
+    uploader = _get_widget_by_label(at.file_uploader, "Upload an image", partial=True)
+    uploader.upload("rgb_gradient.png", rgb_data, "image/png").run()
+
+    r_effect = _get_widget_by_label(at.radio, "Select Filter Effect")
+    r_effect.set_value("Blur").run()
+
+    r_mode = _get_widget_by_label(at.radio, "Select Approximation Level")
+    r_mode.set_value("AI Recommended").run()
+
+    s_thresh = _get_widget_by_label(at.selectbox, "Target SSIM Quality Threshold")
+    s_thresh.set_value(0.95).run()
+
+    proc_btn = _get_widget_by_label(at.button, "Process Image", partial=True)
+    proc_btn.click().run()
+
+    assert len(at.exception) == 0, f"Unexpected exceptions on RGB gradient: {[e.value for e in at.exception]}"
+
+    res = at.session_state["processed_results"]
+    selected_mode = res["mode"]
+    measured_ssim = res["metrics"]["ssim"]
+
+    assert (measured_ssim >= 0.95) or (selected_mode == 0), (
+        f"At threshold 0.95, selected mode {selected_mode} has displayed SSIM {measured_ssim:.4f} (< 0.95)"
+    )
+
+
