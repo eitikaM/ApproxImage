@@ -1,0 +1,256 @@
+================================================================================
+PART 1: 16-COMBINATION DIAGNOSTIC SUITE RUN (python/diagnose_all16.py)
+================================================================================
+
+== Scrambled-order load_lut check ==
+load_lut(3) matches disk: True
+load_lut(0) matches disk: True
+load_lut(2) matches disk: True
+load_lut(1) matches disk: True
+load_lut(3) matches disk: True
+load_lut(0) matches disk: True
+
+== Per-coefficient LUT error (all 256 pixel values) ==
+blur     coef   3 | m1 max=   6 rate= 37.5% | m2 max=  30 rate= 59.4% | m3 max= 126 rate= 73.4%
+blur     coef   7 | m1 max=  10 rate= 50.0% | m2 max=  58 rate= 71.9% | m3 max= 250 rate= 85.2%
+blur     coef   9 | m1 max=   0 rate=  0.0% | m2 max=  24 rate= 43.8% | m3 max= 120 rate= 64.8%
+blur     coef  14 | m1 max=   4 rate= 25.0% | m2 max=  52 rate= 62.5% | m3 max= 244 rate= 79.7%
+blur     coef  19 | m1 max=   6 rate= 37.5% | m2 max=  46 rate= 68.8% | m3 max= 238 rate= 85.9%
+blur     coef  20 | m1 max=   0 rate=  0.0% | m2 max=  16 rate= 25.0% | m3 max= 112 rate= 53.1%
+edge     coef  16 | m1 max=   0 rate=  0.0% | m2 max=   0 rate=  0.0% | m3 max=   0 rate=  0.0%
+edge     coef  32 | m1 max=   0 rate=  0.0% | m2 max=   0 rate=  0.0% | m3 max=   0 rate=  0.0%
+edge     coef 192 | m1 max=   0 rate=  0.0% | m2 max=   0 rate=  0.0% | m3 max=   0 rate=  0.0%
+sharpen  coef  10 | m1 max=   0 rate=  0.0% | m2 max=  24 rate= 43.8% | m3 max= 120 rate= 60.9%
+sharpen  coef  19 | m1 max=   6 rate= 37.5% | m2 max=  46 rate= 68.8% | m3 max= 238 rate= 85.9%
+sharpen  coef 244 | m1 max=   0 rate=  0.0% | m2 max=  16 rate= 25.0% | m3 max= 272 rate= 75.0%
+emboss   coef  32 | m1 max=   0 rate=  0.0% | m2 max=   0 rate=  0.0% | m3 max=   0 rate=  0.0%
+emboss   coef  48 | m1 max=   0 rate=  0.0% | m2 max=   0 rate=  0.0% | m3 max=  96 rate= 37.5%
+emboss   coef  64 | m1 max=   0 rate=  0.0% | m2 max=   0 rate=  0.0% | m3 max=   0 rate=  0.0%
+emboss   coef 128 | m1 max=   0 rate=  0.0% | m2 max=   0 rate=  0.0% | m3 max=   0 rate=  0.0%
+
+===== sample_photo (256, 256) =====
+effect  | mode | lut md5  | out md5  | diff px | max | mean   | MSE      | PSNR    | SSIM    | >=0.99
+blur (m0==oracle:True)| 0    | e9569e71 | c71390f2 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+blur    | 1    | 35878177 | e01ebb4b |    8915 |   1 |  0.136 |    0.136 |   56.79 | 0.99894 | True
+blur    | 2    | 87fab627 | e1fa78a3 |   53821 |   4 |  1.378 |    2.829 |   43.61 | 0.99736 | True
+blur    | 3    | 0af59db8 | 118a09ea |   61882 |  19 |  5.646 |   46.011 |   31.50 | 0.98888 | False
+edge (m0==oracle:True)| 0    | e9569e71 | b1af0ff5 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 1    | 35878177 | b1af0ff5 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 2    | 87fab627 | b1af0ff5 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 3    | 0af59db8 | b1af0ff5 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen (m0==oracle:True)| 0    | e9569e71 | f1993093 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen | 1    | 35878177 | af65d16e |     446 |   1 |  0.007 |    0.007 |   69.80 | 0.99992 | True
+sharpen | 2    | 87fab627 | e203993e |   31638 |   2 |  0.568 |    0.739 |   49.45 | 0.99821 | True
+sharpen | 3    | 0af59db8 | f0aa5321 |   55185 |   9 |  2.919 |   12.340 |   37.22 | 0.99502 | True
+emboss (m0==oracle:True)| 0    | e9569e71 | 77a07941 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 1    | 35878177 | 77a07941 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 2    | 87fab627 | 77a07941 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 3    | 0af59db8 | 60a0ce06 |     169 |   1 |  0.003 |    0.003 |   74.02 | 1.00000 | True
+
+===== smooth_gradient (256, 256) =====
+effect  | mode | lut md5  | out md5  | diff px | max | mean   | MSE      | PSNR    | SSIM    | >=0.99
+blur (m0==oracle:True)| 0    | e9569e71 | 609acec0 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+blur    | 1    | 35878177 | 6012b316 |   10522 |   1 |  0.161 |    0.161 |   56.07 | 0.99779 | True
+blur    | 2    | 87fab627 | f3eb4787 |   49684 |   4 |  1.261 |    2.548 |   44.07 | 0.99303 | True
+blur    | 3    | 0af59db8 | 717587af |   60538 |  19 |  5.860 |   54.630 |   30.76 | 0.96664 | False
+edge (m0==oracle:True)| 0    | e9569e71 | 3ab9b872 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 1    | 35878177 | 3ab9b872 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 2    | 87fab627 | 3ab9b872 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 3    | 0af59db8 | 3ab9b872 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen (m0==oracle:True)| 0    | e9569e71 | 1f4bc59f |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen | 1    | 35878177 | 814c9605 |    4833 |   1 |  0.074 |    0.074 |   59.45 | 0.99891 | True
+sharpen | 2    | 87fab627 | 2721120e |   34739 |   2 |  0.586 |    0.698 |   49.69 | 0.99621 | True
+sharpen | 3    | 0af59db8 | 377bd541 |   50831 |   9 |  2.526 |   11.291 |   37.60 | 0.98209 | False
+emboss (m0==oracle:True)| 0    | e9569e71 | 14d69716 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 1    | 35878177 | 14d69716 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 2    | 87fab627 | 14d69716 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 3    | 0af59db8 | c3fd99af |   13527 |   1 |  0.206 |    0.206 |   54.98 | 0.99682 | True
+
+===== noisy_texture (256, 256) =====
+effect  | mode | lut md5  | out md5  | diff px | max | mean   | MSE      | PSNR    | SSIM    | >=0.99
+blur (m0==oracle:True)| 0    | e9569e71 | 8c3432de |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+blur    | 1    | 35878177 | eebca9ce |   10314 |   1 |  0.157 |    0.157 |   56.16 | 0.99920 | True
+blur    | 2    | 87fab627 | 7d65d471 |   64067 |   3 |  1.259 |    1.823 |   45.52 | 0.99861 | True
+blur    | 3    | 0af59db8 | 12d92bf3 |   65536 |  12 |  6.024 |   37.783 |   32.36 | 0.99169 | True
+edge (m0==oracle:True)| 0    | e9569e71 | d023f0a6 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 1    | 35878177 | d023f0a6 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 2    | 87fab627 | d023f0a6 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 3    | 0af59db8 | d023f0a6 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen (m0==oracle:True)| 0    | e9569e71 | 93a17d04 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen | 1    | 35878177 | 5597573b |    2767 |   1 |  0.042 |    0.042 |   61.88 | 1.00000 | True
+sharpen | 2    | 87fab627 | 896b1efb |   33968 |   2 |  0.524 |    0.535 |   50.85 | 0.99997 | True
+sharpen | 3    | 0af59db8 | c7b350bd |   56476 |   8 |  2.334 |    7.579 |   39.33 | 0.99962 | True
+emboss (m0==oracle:True)| 0    | e9569e71 | 04f8e099 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 1    | 35878177 | 04f8e099 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 2    | 87fab627 | 04f8e099 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 3    | 0af59db8 | fcd3014b |    8613 |   1 |  0.131 |    0.131 |   56.94 | 0.99995 | True
+
+===== high_contrast (256, 256) =====
+effect  | mode | lut md5  | out md5  | diff px | max | mean   | MSE      | PSNR    | SSIM    | >=0.99
+blur (m0==oracle:True)| 0    | e9569e71 | 029165b9 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+blur    | 1    | 35878177 | a284cb15 |   15884 |   1 |  0.242 |    0.242 |   54.29 | 0.99999 | True
+blur    | 2    | 87fab627 | 140bd7d2 |   17412 |   4 |  1.000 |    3.892 |   42.23 | 0.99994 | True
+blur    | 3    | 0af59db8 | 1dd6be88 |   17424 |  20 |  5.000 |   97.470 |   28.24 | 0.99855 | True
+edge (m0==oracle:True)| 0    | e9569e71 | 8c01ff43 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 1    | 35878177 | 8c01ff43 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 2    | 87fab627 | 8c01ff43 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+edge    | 3    | 0af59db8 | 8c01ff43 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen (m0==oracle:True)| 0    | e9569e71 | 1c07d2b2 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen | 1    | 35878177 | 1c07d2b2 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen | 2    | 87fab627 | 1c07d2b2 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+sharpen | 3    | 0af59db8 | 1c07d2b2 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss (m0==oracle:True)| 0    | e9569e71 | 7cd70556 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 1    | 35878177 | 7cd70556 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 2    | 87fab627 | 7cd70556 |       0 |   0 |  0.000 |    0.000 |     inf | 1.00000 | True
+emboss  | 3    | 0af59db8 | f04202ea |     129 |   1 |  0.002 |    0.002 |   75.19 | 1.00000 | True
+
+================================================================================
+PART 2: GUI AUDIT FINDINGS (python/app.py)
+================================================================================
+
+1. EFFECT AND MODE CALL CHAIN
+- Selected Effect:
+  Read via st.radio in render_configure_screen() (python/app.py:L883-890):
+    chosen_effect = st.radio("Select Filter Effect", options=list(EFFECTS.keys()), index=curr_eff_idx, ...)
+    st.session_state["effect_label"] = chosen_effect
+    EFFECT_KEY_MAP = {"Blur": "blur", "Edge Detection": "edge", "Sharpen": "sharpen", "Emboss": "emboss"}
+    st.session_state["effect_key"] = EFFECT_KEY_MAP[chosen_effect]
+- Selected Mode:
+  Read via st.radio in render_configure_screen() (python/app.py:L919-926):
+    chosen_mode = st.radio("Select Approximation Level", options=mode_opts, index=curr_mode_idx, ...)
+    st.session_state["mode_str"] = chosen_mode
+- Primary Processing Trigger:
+  When "Process Image ->" is clicked (python/app.py:L958-1096):
+    Ground truth Mode 0 is computed first (L973-975):
+      exact_ref, exact_is_col, exact_label = convolve_multichannel_wrapper(rgb_img, gray_img, eff_key, 0, is_col)
+    If mode_choice == "AI Recommended" (L981-1075):
+      Adaptive selector evaluates Mode 3 (L1003-1005), Mode 2 (L1023-1025), Mode 1 (L1044-1046), falling back to Mode 0 (L1060-1068).
+    Else manual mode mapping (L1077-1096):
+      MODE_MAP = {"Exact": 0, "Mode 1 — Low Approximation": 1, "Mode 2 — Medium Approximation": 2, "Mode 3 — High Approximation": 3}
+      target_mode = MODE_MAP[mode_choice]
+      approx_res, is_out_col, out_lbl = convolve_multichannel_wrapper(rgb_img, gray_img, eff_key, target_mode, is_col)
+- Wrapper to Core Pipeline (python/app.py:L148-188):
+  convolve_multichannel_wrapper calls image_pipeline.process_image(channel, effect_key, mode):
+    L170: proc_r = process_image(r_ch, effect_key, mode)
+    L171: proc_g = process_image(g_ch, effect_key, mode)
+    L172: proc_b = process_image(b_ch, effect_key, mode)
+    (or L179/L183/L187 for single-channel grayscale/edge/emboss)
+
+2. CACHING MECHANISMS
+- Streamlit Resource Cache:
+  Only one cache decorator exists in python/app.py (L117-123):
+    @st.cache_resource
+    def get_inference_engine():
+        ...
+        return AdaptiveInferenceEngine(model_path=model_path)
+  This caches the ML model object in memory across sessions.
+- Processed Results Cache / Session State:
+  st.session_state["processed_results"] (python/app.py:L1099-1115) stores the dictionary of the last run.
+  The dictionary payload explicitly records:
+    "effect_key": eff_key,
+    "effect_label": eff_lbl,
+    "mode": target_mode,
+    "mode_choice": mode_choice,
+    "target_ssim_threshold": target_ssim,
+    "exact_ref": exact_ref,
+    "approx_result": approx_res,
+    "metrics": metrics
+  Neither image processing convolution nor LUT loads use any silent or stale memoization cache.
+
+3. OUTPUT FILENAMES AND SOURCE OF 'BLUR'
+- Download Button Filename Construction (python/app.py:L1296, L1305):
+  L1296: file_name=f"approximage_mode{res['mode']}_{res['effect_key']}.png"
+  L1305: file_name=f"approximage_diff_mode{res['mode']}_{res['effect_key']}.png"
+  The filenames are dynamically constructed using the active effect_key and mode.
+- Source of 'blur' Appearance:
+  In the Original Input Expander (python/app.py:L1316):
+    st.markdown(f"**Filename:** `{res['source']}`")
+  When a user re-uploads an exported image previously named `approximage_mode0_exact_blur (1).png` to test a different filter (such as Sharpen), `res['source']` displays the uploaded file's original disk name containing 'blur'.
+
+4. SEPARATION OF EXACT RESULT AND APPROXIMATE RESULT ARRAYS
+- For Modes 1, 2, and 3:
+  approx_res and exact_ref are generated by distinct calls to convolve_multichannel_wrapper() and point to separate numpy arrays in memory.
+- For Mode 0 (python/app.py:L1062, L1085):
+  approx_res = exact_ref
+  In Mode 0, approx_result and exact_ref reference the exact same underlying numpy array in memory (`res['approx_result'] is res['exact_ref']`).
+
+5. ARRAYS USED TO COMPUTE DISPLAYED METRICS
+- Primary Metrics (python/app.py:L1096, L1165):
+  L1096: metrics = compute_multichannel_metrics(exact_ref, approx_res)
+  L1165: diff_gray, diff_heatmap, diff_stats = compute_pixel_difference_map(res["exact_ref"], res["approx_result"], amp_factor=15.0)
+  Metrics (MSE, PSNR, SSIM, Max Delta) are strictly calculated between the exact processed reference (Mode 0) and the approximate processed output (Mode N). The calculation is fully accurate and does NOT compare against the unprocessed input.
+
+6. DISPLAY REFRESH BEHAVIOR
+- After processing completes in render_configure_screen() (python/app.py:L1118-1119):
+  st.session_state["page"] = "results"
+  st.rerun()
+  The results page renders freshly computed data from session_state["processed_results"].
+  When navigating back via "<- Back to Configuration" (L1141-1143):
+  st.session_state["page"] = "configure"
+  st.rerun()
+  The configuration screen is restored while retaining st.session_state["image_data"].
+
+7. COLOR (RGB) VS GRAYSCALE HANDLING
+- The GUI supports full color RGB as well as grayscale:
+  python/app.py:L148-188 (convolve_multichannel_wrapper):
+  - If is_color is True and effect is Blur or Sharpen: convolve_multichannel_wrapper splits image into R, G, B channels, convolves each channel independently, and stacks them back as uint8 RGB.
+  - If effect is Edge Detection or Emboss: converted to luminance grayscale as standard for directional spatial gradients.
+  - Metrics are computed across RGB channels when 3D (L89-98) or 2D when grayscale.
+
+8. EXISTING DISK FILES CONTAINING 'BLUR'
+results\debug_blur_mode0.png | 1758597 bytes | 2026-10-08 18:39:44
+results\debug_blur_mode3.png | 2050820 bytes | 2026-10-08 18:39:44
+results\image_results\blur_exact.png | 86451 bytes | 2026-10-08 23:39:02
+results\image_results\blur_mode1.png | 88600 bytes | 2026-10-08 23:39:02
+results\image_results\blur_mode2.png | 86895 bytes | 2026-10-08 23:39:02
+results\image_results\blur_mode3.png | 79379 bytes | 2026-10-08 23:39:03
+
+================================================================================
+PART 3: HARDWARE SYNTHESIS REPRODUCTION & NETLIST VERIFICATION
+================================================================================
+
+Flow: Yosys 0.66 (read_verilog, synth -top, flatten, opt, abc -g gates, stat, ltp)
+Sim: Icarus Verilog 12.0 with Yosys internal gate simulation library (simlib.v)
+
+SYNTHESIS AND NETLIST VERIFICATION SUMMARY TABLE:
++------------------------------------+--------------------------+-----------------------+-------------+----------------------------+------------------------------------+
+| Variant                            | Top Module               | Cells Excl. $scopeinfo| LTP (Levels)| Mismatches vs Golden RTL   | Mismatches vs LUT Reference (.hex) |
++------------------------------------+--------------------------+-----------------------+-------------+----------------------------+------------------------------------+
+| Exact Mode 0                       | structural_multiplier    | 366                   | 40          | 0 / 65,536                 | 0 / 65,536                         |
+| Mode 0 via Approx RTL (mode=2'b00) | synthesis_mode0_same_rtl | 366                   | 40          | 0 / 65,536                 | 0 / 65,536                         |
+| Fixed Mode 1                       | synthesis_mode1          | 353                   | 41          | 0 / 65,536                 | 0 / 65,536                         |
+| Fixed Mode 2                       | synthesis_mode2          | 317                   | 34          | 0 / 65,536                 | 0 / 65,536                         |
+| Fixed Mode 3                       | synthesis_mode3          | 262                   | 29          | 0 / 65,536                 | 0 / 65,536                         |
+| Runtime-configurable               | net_configurable         | 431                   | 41          | 0 across all modes         | 0 across all modes                 |
+|   - Mode 0                         | net_configurable (2'b00) | 431 (depth 41)        | 41          | 0 / 65,536                 | 0 / 65,536                         |
+|   - Mode 1                         | net_configurable (2'b01) | 431 (depth 41)        | 41          | 0 / 65,536                 | 0 / 65,536                         |
+|   - Mode 2                         | net_configurable (2'b10) | 431 (depth 41)        | 41          | 0 / 65,536                 | 0 / 65,536                         |
+|   - Mode 3                         | net_configurable (2'b11) | 431 (depth 41)        | 41          | 0 / 65,536                 | 0 / 65,536                         |
++------------------------------------+--------------------------+-----------------------+-------------+----------------------------+------------------------------------+
+
+Note on Cell Savings and Configurable Overhead:
+- Fixed-mode cell savings are calculated against the 366-cell exact baseline multiplier (structural_multiplier):
+  * Fixed Mode 1: 353 cells (-3.55% vs Mode 0)
+  * Fixed Mode 2: 317 cells (-13.39% vs Mode 0)
+  * Fixed Mode 3: 262 cells (-28.42% vs Mode 0)
+- The runtime-configurable multiplier (431 cells, depth 41) contains internal multiplexing logic and multi-mode partial-product routing, making it 65 cells larger than the 366-cell dedicated exact multiplier (+17.76% hardware overhead).
+- Exhaustive verification: In Step 1, net_configurable was tested across all 4 modes (0..3) for all 65,536 (A,B) pairs (262,144 vectors total) against lut_modeN.hex using Icarus Verilog and Yosys simlib.v. Actual mismatch counts:
+  * Mode 0: 0 mismatches
+  * Mode 1: 0 mismatches
+  * Mode 2: 0 mismatches
+  * Mode 3: 0 mismatches
+
+GIT STATUS:
+On branch main
+Your branch is ahead of 'origin/main' by 3 commits.
+  (use "git push" to publish your local commits)
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	results/reports/
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+GIT DIFF --STAT:
+(Clean - No working tree diff)
+================================================================================
