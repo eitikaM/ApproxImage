@@ -216,23 +216,51 @@ def compute_multichannel_metrics(exact_ref: np.ndarray, approx_res: np.ndarray) 
     }
 
 
-def compute_pixel_difference_map(exact_img: np.ndarray, approx_img: np.ndarray) -> np.ndarray:
+def compute_pixel_difference_map(exact_img: np.ndarray, approx_img: np.ndarray, amp_factor: float = 15.0):
     """
-    Computes absolute pixel difference between exact Mode 0 and approximate output.
-    Returns uint8 difference map amplified for clear human visualization.
+    Calculates the absolute pixel-by-pixel difference between the exact processed image
+    and the approximate processed image.
+    
+    Amplifies subtle approximation differences for human visualization only.
+    The actual processed output is strictly preserved and unmodified.
+    
+    Returns:
+        - diff_gray: uint8 amplified grayscale difference map
+        - diff_heatmap_rgb: uint8 high-contrast colored heatmap (Inferno colormap)
+        - stats: dict containing raw max_delta, mean_delta, changed_pct, arrays_differ, amp_factor
     """
-    diff = np.abs(exact_img.astype(np.int16) - approx_img.astype(np.int16)).astype(np.uint8)
-    if len(diff.shape) == 3:
-        diff_mag = np.mean(diff, axis=-1).astype(np.uint8)
+    raw_diff = np.abs(exact_img.astype(np.int32) - approx_img.astype(np.int32))
+    if len(raw_diff.shape) == 3:
+        diff_mag = np.max(raw_diff, axis=-1).astype(np.float32)
     else:
-        diff_mag = diff
+        diff_mag = raw_diff.astype(np.float32)
 
-    if diff_mag.max() == 0:
-        return diff_mag
+    max_delta = int(diff_mag.max())
+    mean_delta = float(diff_mag.mean())
+    changed_pct = float((diff_mag > 0).mean() * 100.0)
+    arrays_differ = bool(max_delta > 0)
 
-    # Amplify subtle differences (e.g. 1..10 difference values) so they are visually striking
-    amplified = np.clip(diff_mag.astype(np.float32) * 8.0, 0, 255).astype(np.uint8)
-    return amplified
+    stats = {
+        "max_delta": max_delta,
+        "mean_delta": mean_delta,
+        "changed_pct": changed_pct,
+        "arrays_differ": arrays_differ,
+        "amp_factor": amp_factor
+    }
+
+    h, w = diff_mag.shape[:2]
+    if max_delta == 0:
+        zero_gray = np.zeros((h, w), dtype=np.uint8)
+        zero_rgb = np.zeros((h, w, 3), dtype=np.uint8)
+        return zero_gray, zero_rgb, stats
+
+    # Amplify subtle errors (e.g. 1..10 difference values) for visualization
+    amplified_gray = np.clip(diff_mag * amp_factor, 0, 255).astype(np.uint8)
+    # Convert to RGB heatmap via OpenCV Inferno colormap (BGR to RGB)
+    heatmap_bgr = cv2.applyColorMap(amplified_gray, cv2.COLORMAP_INFERNO)
+    heatmap_rgb = cv2.cvtColor(heatmap_bgr, cv2.COLOR_BGR2RGB)
+
+    return amplified_gray, heatmap_rgb, stats
 
 
 def to_png_bytes(img_arr: np.ndarray, is_color: bool) -> bytes:
@@ -760,6 +788,10 @@ if "effect_label" not in st.session_state:
     st.session_state["effect_label"] = "Blur"
 if "mode_str" not in st.session_state:
     st.session_state["mode_str"] = "AI Recommended"
+if "ssim_threshold" not in st.session_state:
+    st.session_state["ssim_threshold"] = 0.99
+if "diff_view_style" not in st.session_state:
+    st.session_state["diff_view_style"] = "Heatmap (Inferno)"
 if "processed_results" not in st.session_state:
     st.session_state["processed_results"] = None
 
@@ -894,6 +926,32 @@ def render_configuration_screen():
         st.session_state["mode_str"] = chosen_mode
 
     st.caption("Higher approximation can reduce hardware complexity, but may increase the difference from the exact result.")
+
+    # Configurable SSIM Quality Constraint
+    st.markdown('<div style="margin-top: 1rem; margin-bottom: 0.3rem;"></div>', unsafe_allow_html=True)
+    st.markdown("**Adaptive Selector Quality Constraint (SSIM Threshold)**")
+    
+    thresh_c1, thresh_c2 = st.columns([1, 2])
+    with thresh_c1:
+        threshold_options = [0.99, 0.98, 0.95, 0.90]
+        curr_thresh = st.session_state.get("ssim_threshold", 0.99)
+        curr_t_idx = threshold_options.index(curr_thresh) if curr_thresh in threshold_options else 0
+        chosen_thresh = st.selectbox(
+            "Target SSIM Quality Threshold",
+            options=threshold_options,
+            index=curr_t_idx,
+            format_func=lambda x: f"SSIM ≥ {x:.2f}" + (" (Strict / Default)" if x == 0.99 else (" (Aggressive)" if x == 0.90 else "")),
+            help="Quality threshold used by the adaptive selector to accept an approximate mode."
+        )
+        st.session_state["ssim_threshold"] = chosen_thresh
+
+    with thresh_c2:
+        st.info(
+            f"**Quality vs. Efficiency Trade-off:** A lower threshold (e.g. 0.95 or 0.90) permits greater "
+            f"image-quality loss and allows the adaptive selector to choose more aggressive approximation "
+            f"(Mode 3 instead of Mode 2) for higher hardware savings.\n\n"
+            f"*Note: Adjusting this threshold modifies the selector's acceptance constraint; it does NOT alter the hardware multiplier's arithmetic logic.*"
+        )
     st.markdown('<div style="margin-top: 1.2rem;"></div>', unsafe_allow_html=True)
 
     # 4. Primary Process Button
@@ -919,6 +977,7 @@ def render_configuration_screen():
 
             # 2. Determine target multiplier mode & run convolution
             ai_pred = None
+            target_ssim = st.session_state.get("ssim_threshold", 0.99)
             if mode_choice == "AI Recommended":
                 rf_pred = engine.predict(gray_img, eff_key)
                 p_unsafe = rf_pred["probability_unsafe"]
@@ -947,14 +1006,14 @@ def render_configuration_screen():
                     t_proc = (time.perf_counter() - t_start) * 1000.0
                     m3_metrics = compute_multichannel_metrics(exact_ref, m3_res)
 
-                    if m3_metrics["ssim"] >= 0.99:
+                    if m3_metrics["ssim"] >= target_ssim:
                         target_mode = 3
                         approx_res = m3_res
                         is_out_col = m3_col
                         out_lbl = m3_lbl
                         proc_ms = t_proc
                         metrics = m3_metrics
-                        rationale_text = f"Mode 3 was predicted safe ({p_unsafe * 100:.1f}% risk < threshold {threshold * 100:.1f}%) and verified to satisfy the SSIM ≥ 0.99 requirement (measured SSIM: {m3_metrics['ssim']:.4f}), achieving maximum hardware efficiency (28.42% logic cell reduction)."
+                        rationale_text = f"Mode 3 was predicted safe ({p_unsafe * 100:.1f}% risk < threshold {threshold * 100:.1f}%) and verified to satisfy the SSIM ≥ {target_ssim:.2f} constraint (measured SSIM: {m3_metrics['ssim']:.4f}), achieving maximum hardware efficiency (28.42% logic cell reduction)."
                     else:
                         m3_fail_ssim = m3_metrics["ssim"]
 
@@ -967,7 +1026,7 @@ def render_configuration_screen():
                     t_proc = (time.perf_counter() - t_start) * 1000.0
                     m2_metrics = compute_multichannel_metrics(exact_ref, m2_res)
 
-                    if m2_metrics["ssim"] >= 0.99:
+                    if m2_metrics["ssim"] >= target_ssim:
                         target_mode = 2
                         approx_res = m2_res
                         is_out_col = m2_col
@@ -975,9 +1034,9 @@ def render_configuration_screen():
                         proc_ms = t_proc
                         metrics = m2_metrics
                         if p_unsafe >= threshold:
-                            rationale_text = f"Mode 3 was predicted to risk violating the SSIM ≥ 0.99 constraint ({p_unsafe * 100:.1f}% risk ≥ threshold {threshold * 100:.1f}%). Mode 2 verified safe (measured SSIM: {m2_metrics['ssim']:.4f}), providing balanced hardware efficiency (13.39% logic cell reduction)."
+                            rationale_text = f"Mode 3 was predicted to risk violating the SSIM ≥ {target_ssim:.2f} constraint ({p_unsafe * 100:.1f}% risk ≥ threshold {threshold * 100:.1f}%). Mode 2 verified safe (measured SSIM: {m2_metrics['ssim']:.4f}), providing balanced hardware efficiency (13.39% logic cell reduction)."
                         else:
-                            rationale_text = f"Mode 3 failed the verified SSIM ≥ 0.99 constraint (measured: {m3_fail_ssim:.4f}). Mode 2 verified safe (measured SSIM: {m2_metrics['ssim']:.4f}), providing balanced hardware efficiency (13.39% logic cell reduction)."
+                            rationale_text = f"Mode 3 failed the verified SSIM ≥ {target_ssim:.2f} constraint (measured: {m3_fail_ssim:.4f}). Mode 2 verified safe (measured SSIM: {m2_metrics['ssim']:.4f}), providing balanced hardware efficiency (13.39% logic cell reduction)."
 
                 # Step 3: If Mode 2 is unsafe, evaluate Mode 1
                 if target_mode is None:
@@ -988,14 +1047,14 @@ def render_configuration_screen():
                     t_proc = (time.perf_counter() - t_start) * 1000.0
                     m1_metrics = compute_multichannel_metrics(exact_ref, m1_res)
 
-                    if m1_metrics["ssim"] >= 0.99:
+                    if m1_metrics["ssim"] >= target_ssim:
                         target_mode = 1
                         approx_res = m1_res
                         is_out_col = m1_col
                         out_lbl = m1_lbl
                         proc_ms = t_proc
                         metrics = m1_metrics
-                        rationale_text = f"Higher approximation modes (Modes 3 & 2) violated the SSIM ≥ 0.99 requirement. Mode 1 verified safe (measured SSIM: {m1_metrics['ssim']:.4f}), providing low approximation (3.55% logic cell reduction)."
+                        rationale_text = f"Higher approximation modes (Modes 3 & 2) violated the SSIM ≥ {target_ssim:.2f} requirement. Mode 1 verified safe (measured SSIM: {m1_metrics['ssim']:.4f}), providing low approximation (3.55% logic cell reduction)."
 
                 # Step 4: If Mode 1 is unsafe, fall back to Exact Mode 0
                 if target_mode is None:
@@ -1005,12 +1064,13 @@ def render_configuration_screen():
                     out_lbl = exact_label
                     proc_ms = t_ref_ms
                     metrics = {"mse": 0.0, "psnr": float("inf"), "ssim": 1.0}
-                    rationale_text = "All approximate modes (Modes 1, 2, 3) violated the SSIM ≥ 0.99 quality requirement. The system safely selected Exact Mode 0 for maximum precision."
+                    rationale_text = f"All approximate modes (Modes 1, 2, 3) violated the SSIM ≥ {target_ssim:.2f} quality requirement. The system safely selected Exact Mode 0 for maximum precision."
 
                 ai_pred = {
                     "selected_mode": target_mode,
                     "probability_unsafe": p_unsafe,
                     "decision_threshold": threshold,
+                    "target_ssim_threshold": target_ssim,
                     "rationale": rationale_text
                 }
             else:
@@ -1042,6 +1102,7 @@ def render_configuration_screen():
                 "effect_label": eff_lbl,
                 "mode": target_mode,
                 "mode_choice": mode_choice,
+                "target_ssim_threshold": target_ssim,
                 "is_color_input": is_col,
                 "is_output_color": is_out_col,
                 "output_label": out_lbl,
@@ -1068,7 +1129,7 @@ def render_results_screen():
         st.rerun()
         return
 
-    rgb_img, _, is_col = st.session_state["image_data"]
+    rgb_img, gray_img, is_col = st.session_state["image_data"]
     hw_spec = HARDWARE_SPECS[res["mode"]]
     metrics = res["metrics"]
     ssim_val = metrics["ssim"]
@@ -1100,13 +1161,39 @@ def render_results_screen():
     </div>
     """, unsafe_allow_html=True)
 
-    res_col1, res_col2 = st.columns(2)
+    # Compute Amplified Difference Map for visualization
+    diff_gray, diff_heatmap, diff_stats = compute_pixel_difference_map(res["exact_ref"], res["approx_result"], amp_factor=15.0)
+
+    # Header and difference map style toggle
+    st.markdown("""
+    <div style="text-align: center; margin-bottom: 0.9rem;">
+        <span class="vs-pill">EXACT RESULT vs APPROXIMATE RESULT & AMPLIFIED DIFFERENCE MAP</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    c_toggle1, c_toggle2 = st.columns([2, 1])
+    with c_toggle1:
+        st.caption("Side-by-side comparison with an amplified difference map to reveal subtle approximation errors.")
+    with c_toggle2:
+        diff_style_choice = st.radio(
+            "Difference View Style",
+            options=["Heatmap (Inferno)", "Grayscale (15×)"],
+            horizontal=True,
+            index=0 if "Heatmap" in st.session_state.get("diff_view_style", "Heatmap") else 1,
+            label_visibility="collapsed"
+        )
+        st.session_state["diff_view_style"] = diff_style_choice
+
+    active_diff_img = diff_heatmap if "Heatmap" in diff_style_choice else diff_gray
+
+    # PRIMARY 3-COLUMN DISPLAY
+    res_col1, res_col2, res_col3 = st.columns(3)
 
     with res_col1:
         st.markdown("""
         <div class="result-frame">
             <div class="result-frame-header" style="color: #7B5BC6;">Exact Result</div>
-            <div class="result-frame-sub">Mode 0 — Maximum Precision</div>
+            <div class="result-frame-sub">Mode 0 — Ground-Truth Reference</div>
         </div>
         """, unsafe_allow_html=True)
         if res["is_output_color"]:
@@ -1117,17 +1204,16 @@ def render_results_screen():
         else:
             st.image(res["exact_ref"], use_container_width=True, clamp=True)
 
-        # Under Exact Result: Compact Single-Line Parameters
         st.markdown(f"""
         <div class="param-box">
             <div class="param-line"><span class="param-label"><b>SSIM</b> — Similarity:</span> <span class="param-val">100%</span></div>
             <div class="param-line"><span class="param-label"><b>MSE</b> — Pixel Difference:</span> <span class="param-val">0</span></div>
             <div class="param-line"><span class="param-label"><b>PSNR</b> — Signal Quality:</span> <span class="param-val">∞</span></div>
-            <div class="param-line"><span class="param-label"><b>Logic Cells</b> — Hardware Used:</span> <span class="param-val">366</span></div>
+            <div class="param-line"><span class="param-label"><b>Logic Cells</b> — Hardware:</span> <span class="param-val">366 (100%)</span></div>
             <div class="param-line"><span class="param-label"><b>Critical Path</b> — Delay:</span> <span class="param-val">40</span></div>
-            <div class="param-line"><span class="param-label"><b>Processing Time</b> — Execution:</span> <span class="param-val">{exact_time_ms:.2f} ms</span></div>
+            <div class="param-line"><span class="param-label"><b>Processing Time:</b></span> <span class="param-val">{exact_time_ms:.2f} ms</span></div>
             <div style="font-size: 0.78rem; color: #8C7D96; margin-top: 0.45rem; font-style: italic; border-top: 1px dashed rgba(155, 126, 222, 0.2); padding-top: 0.35rem;">
-                Exact Mode 0 is the ground-truth baseline reference.
+                Exact Mode 0 is the 100% accurate baseline reference.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -1137,7 +1223,7 @@ def render_results_screen():
         st.markdown(f"""
         <div class="result-frame">
             <div class="result-frame-header" style="color: #D45B7A;">Approximate Result</div>
-            <div class="result-frame-sub">{mode_header_desc}</div>
+            <div class="result-frame-sub">{mode_header_desc} (Real Output)</div>
         </div>
         """, unsafe_allow_html=True)
         if res["is_output_color"]:
@@ -1148,33 +1234,53 @@ def render_results_screen():
         else:
             st.image(res["approx_result"], use_container_width=True, clamp=True)
 
-        # Under Approximate Result: Compact Single-Line Parameters
         st.markdown(f"""
         <div class="param-box">
             <div class="param-line"><span class="param-label"><b>SSIM</b> — Similarity:</span> <span class="param-val">{ssim_val * 100:.2f}%</span></div>
             <div class="param-line"><span class="param-label"><b>MSE</b> — Pixel Difference:</span> <span class="param-val">{metrics['mse']:.4f}</span></div>
             <div class="param-line"><span class="param-label"><b>PSNR</b> — Signal Quality:</span> <span class="param-val">{psnr_str}</span></div>
-            <div class="param-line"><span class="param-label"><b>Logic Cells</b> — Hardware Used:</span> <span class="param-val">{hw_spec['cells']}</span></div>
+            <div class="param-line"><span class="param-label"><b>Logic Cells</b> — Hardware:</span> <span class="param-val">{hw_spec['cells']} ({hw_spec['reduction_str']} red.)</span></div>
             <div class="param-line"><span class="param-label"><b>Critical Path</b> — Delay:</span> <span class="param-val">{hw_spec['critical_path']}</span></div>
-            <div class="param-line"><span class="param-label"><b>Processing Time</b> — Execution:</span> <span class="param-val">{res['proc_time_ms']:.2f} ms</span></div>
+            <div class="param-line"><span class="param-label"><b>Processing Time:</b></span> <span class="param-val">{res['proc_time_ms']:.2f} ms</span></div>
             <div class="param-line" style="border-top: 1px dashed rgba(155, 126, 222, 0.25); padding-top: 0.35rem; margin-top: 0.35rem;">
-                <span class="param-label"><b>Logic Reduction</b> — Hardware Saved:</span> <span class="param-val-accent">{hw_spec['reduction_str']}</span>
-            </div>
-            <div class="param-line">
-                <span class="param-label"><b>Cells Saved</b> — Hardware Blocks Saved:</span> <span class="param-val-accent">{hw_spec['saved_cells']}</span>
+                <span class="param-label"><b>Cells Saved:</b></span> <span class="param-val-accent">{hw_spec['saved_cells']} ({hw_spec['reduction_str']})</span>
             </div>
             <div style="font-size: 0.78rem; color: #8C7D96; margin-top: 0.45rem; font-style: italic; border-top: 1px dashed rgba(155, 126, 222, 0.2); padding-top: 0.35rem;">
-                Image-quality metrics are measured against the Exact Result.
+                Actual output array is 100% unaltered.
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-    # 3. Downloads (Download Approximate Image REQUIRED)
+    with res_col3:
+        st.markdown("""
+        <div class="result-frame">
+            <div class="result-frame-header" style="color: #E06C3B;">Amplified Difference Map</div>
+            <div class="result-frame-sub">Visualization Only • 15× Magnified (max across colour channels for RGB)</div>
+        </div>
+        """, unsafe_allow_html=True)
+        st.image(active_diff_img, use_container_width=True, clamp=True)
+
+        diff_status_str = f"Differs ({diff_stats['changed_pct']:.1f}% px)" if diff_stats["arrays_differ"] else "Identical (0% diff)"
+        st.markdown(f"""
+        <div class="param-box">
+            <div class="param-line"><span class="param-label"><b>Max Pixel Delta:</b></span> <span class="param-val-accent">{diff_stats['max_delta']} levels</span></div>
+            <div class="param-line"><span class="param-label"><b>Mean Abs Delta:</b></span> <span class="param-val">{diff_stats['mean_delta']:.4f} levels</span></div>
+            <div class="param-line"><span class="param-label"><b>Modified Pixels:</b></span> <span class="param-val">{diff_stats['changed_pct']:.2f}%</span></div>
+            <div class="param-line"><span class="param-label"><b>Output Arrays:</b></span> <span class="param-val" style="color: {'#D45B7A' if diff_stats['arrays_differ'] else '#1F7A61'};">{diff_status_str}</span></div>
+            <div class="param-line"><span class="param-label"><b>Amplification:</b></span> <span class="param-val">15× Visualization</span></div>
+            <div style="font-size: 0.78rem; color: #8C7D96; margin-top: 0.45rem; font-style: italic; border-top: 1px dashed rgba(155, 126, 222, 0.2); padding-top: 0.35rem;">
+                Amplified for visual contrast only; real output is not altered.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # 3. Downloads (Download Approximate Image, Exact, and Difference Map)
     st.markdown('<div style="margin-top: 1rem;"></div>', unsafe_allow_html=True)
     approx_bytes = to_png_bytes(res["approx_result"], res["is_output_color"])
     exact_bytes = to_png_bytes(res["exact_ref"], res["is_output_color"])
+    diff_bytes = to_png_bytes(active_diff_img, len(active_diff_img.shape) == 3 and active_diff_img.shape[2] == 3)
 
-    dl_col1, dl_col2 = st.columns(2)
+    dl_col1, dl_col2, dl_col3 = st.columns(3)
     with dl_col1:
         st.download_button(
             label="Download Exact Reference",
@@ -1190,6 +1296,14 @@ def render_results_screen():
             file_name=f"approximage_mode{res['mode']}_{res['effect_key']}.png",
             mime="image/png",
             type="primary",
+            use_container_width=True
+        )
+    with dl_col3:
+        st.download_button(
+            label="Download Difference Map",
+            data=diff_bytes,
+            file_name=f"approximage_diff_mode{res['mode']}_{res['effect_key']}.png",
+            mime="image/png",
             use_container_width=True
         )
 
@@ -1329,7 +1443,7 @@ def render_results_screen():
     </div>
     """, unsafe_allow_html=True)
 
-    diff_map = compute_pixel_difference_map(res["exact_ref"], res["approx_result"])
+    diff_map, _, _ = compute_pixel_difference_map(res["exact_ref"], res["approx_result"])
     raw_delta = np.abs(res["exact_ref"].astype(np.int16) - res["approx_result"].astype(np.int16))
 
     d_col1, d_col2 = st.columns([1, 2])
@@ -1348,7 +1462,7 @@ def render_results_screen():
                 <div style="font-size: 0.9rem; color: #523E61;">• <b>Peak Pixel Delta:</b> {max_delta} levels</div>
                 <div style="font-size: 0.9rem; color: #523E61;">• <b>Mean Absolute Delta:</b> {mean_delta:.4f} levels</div>
                 <div style="font-size: 0.9rem; color: #523E61;">• <b>Modified Pixels:</b> {changed_pct:.2f}%</div>
-                <div style="font-size: 0.8rem; color: #7A6B84; margin-top: 0.6rem;">(Visual difference map amplified 8× for clear human perception of subtle approximation deltas)</div>
+                <div style="font-size: 0.8rem; color: #7A6B84; margin-top: 0.6rem;">(Visual difference map amplified 15× for clear human perception of subtle approximation deltas)</div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -1407,69 +1521,91 @@ def render_results_screen():
             st.markdown(f"**Approximate Critical Path:** `{hw_spec['critical_path']}` ({hw_spec['timing_eval']})")
             st.markdown(f"**Processing Time:** `{res['proc_time_ms']:.2f} ms`")
 
-    # 10. Multi-Mode Comparison ("Compare All Modes")
+    # 10. Multi-Mode Comparison ("Compare All Four Modes")
     st.markdown("""
-    <div style="font-size: 1.3rem; font-weight: 700; color: #34263D; margin-top: 1.8rem;">Compare All Modes</div>
+    <div style="font-size: 1.3rem; font-weight: 700; color: #34263D; margin-top: 1.8rem;">Compare All Four Multiplier Modes</div>
     <div style="color: #7A6B84; font-size: 0.9rem; margin-bottom: 0.8rem;">
-        Evaluate all four multiplier modes (Mode 0 through Mode 3) on this image to inspect the complete quality vs efficiency trade-off curve.
+        Direct side-by-side comparison of <b>Modes 0, 1, 2, and 3</b> on the same input image. Inspect both the processed outputs and the amplified difference maps vs. Exact Mode 0.
     </div>
     """, unsafe_allow_html=True)
 
-    if st.button("Run Multi-Mode Comparison", key="compare_button"):
-        with st.spinner("Executing 4-mode convolution sweep across multiplier LUTs..."):
-            sweep_rows = []
-            exact_sweep, _, _ = convolve_multichannel_wrapper(
-                rgb_img, gray_img, res["effect_key"], 0, is_col
-            )
+    with st.spinner("Executing 4-mode convolution sweep across multiplier LUTs..."):
+        sweep_rows = []
+        exact_sweep, _, _ = convolve_multichannel_wrapper(
+            rgb_img, gray_img, res["effect_key"], 0, is_col
+        )
 
-            sweep_images = []
-            sweep_metrics = []
+        sweep_images = []
+        sweep_diff_heatmaps = []
+        sweep_metrics = []
+        sweep_diff_stats = []
 
-            for m in range(4):
-                if m == 0:
-                    approx_m = exact_sweep
-                    m_met = {"mse": 0.0, "psnr": float("inf"), "ssim": 1.0}
+        for m in range(4):
+            if m == 0:
+                approx_m = exact_sweep
+                m_met = {"mse": 0.0, "psnr": float("inf"), "ssim": 1.0}
+            else:
+                approx_m, _, _ = convolve_multichannel_wrapper(
+                    rgb_img, gray_img, res["effect_key"], m, is_col
+                )
+                m_met = compute_multichannel_metrics(exact_sweep, approx_m)
+
+            spec = HARDWARE_SPECS[m]
+            q_lbl, _ = classify_quality(m_met["ssim"])
+            _, m_heatmap, m_stats = compute_pixel_difference_map(exact_sweep, approx_m, amp_factor=15.0)
+
+            sweep_images.append(approx_m)
+            sweep_diff_heatmaps.append(m_heatmap)
+            sweep_metrics.append((m_met, spec, q_lbl))
+            sweep_diff_stats.append(m_stats)
+
+            diff_status_str = f"Differs ({m_stats['changed_pct']:.1f}% px)" if m_stats["arrays_differ"] else "Identical (0%)"
+
+            sweep_rows.append({
+                "Mode": f"Mode {m}",
+                "Approximation Level": spec["level"],
+                "SSIM vs Exact": f"{m_met['ssim']:.4f}",
+                "Quality": q_lbl,
+                "MSE": f"{m_met['mse']:.4f}",
+                "PSNR (dB)": "∞" if m_met["psnr"] == float("inf") else f"{m_met['psnr']:.2f}",
+                "Arrays Differ?": diff_status_str,
+                "Max Pixel Delta": m_stats["max_delta"],
+                "Logic Cells": spec["cells"],
+                "Logic Reduction": spec["reduction_str"],
+                "Critical Path": spec["critical_path"]
+            })
+
+        # Show side-by-side images across all 4 modes
+        st.markdown("**Processed Images (Real Unaltered Outputs):**")
+        cmp_cols = st.columns(4)
+        for m in range(4):
+            with cmp_cols[m]:
+                m_met, spec, q_lbl = sweep_metrics[m]
+                m_stats = sweep_diff_stats[m]
+                st.markdown(f"**Mode {m}** ({spec['short_label']})")
+                if res["is_output_color"]:
+                    st.image(sweep_images[m], use_container_width=True, channels="RGB")
+                elif res["effect_key"] == "edge":
+                    disp = cv2.normalize(sweep_images[m], None, 0, 255, cv2.NORM_MINMAX) if sweep_images[m].max() > sweep_images[m].min() else sweep_images[m]
+                    st.image(disp, use_container_width=True, clamp=True)
                 else:
-                    approx_m, _, _ = convolve_multichannel_wrapper(
-                        rgb_img, gray_img, res["effect_key"], m, is_col
-                    )
-                    m_met = compute_multichannel_metrics(exact_sweep, approx_m)
+                    st.image(sweep_images[m], use_container_width=True, clamp=True)
+                st.caption(f"SSIM: {m_met['ssim']:.4f} • Cells: {spec['cells']} ({spec['reduction_str']} red.)")
 
-                spec = HARDWARE_SPECS[m]
-                q_lbl, _ = classify_quality(m_met["ssim"])
+        # Show side-by-side Amplified Difference Maps
+        st.markdown("**Amplified Difference Maps vs Exact Mode 0 (15× Magnified):**")
+        diff_cols = st.columns(4)
+        for m in range(4):
+            with diff_cols[m]:
+                m_met, spec, q_lbl = sweep_metrics[m]
+                m_stats = sweep_diff_stats[m]
+                st.markdown(f"**Mode {m} vs Mode 0**")
+                st.image(sweep_diff_heatmaps[m], use_container_width=True, clamp=True)
+                diff_label = f"Max Δ: {m_stats['max_delta']} | Changed: {m_stats['changed_pct']:.1f}%" if m > 0 else "Baseline: Identical (Δ = 0)"
+                st.caption(diff_label)
 
-                sweep_images.append(approx_m)
-                sweep_metrics.append((m_met, spec, q_lbl))
-
-                sweep_rows.append({
-                    "Mode": f"Mode {m}",
-                    "Approximation Level": spec["level"],
-                    "SSIM vs Exact": f"{m_met['ssim']:.4f}",
-                    "Quality": q_lbl,
-                    "MSE": f"{m_met['mse']:.4f}",
-                    "PSNR (dB)": "∞" if m_met["psnr"] == float("inf") else f"{m_met['psnr']:.2f}",
-                    "Logic Cells": spec["cells"],
-                    "Logic Reduction": spec["reduction_str"],
-                    "Critical Path": spec["critical_path"]
-                })
-
-            # Show side-by-side images across all 4 modes
-            cmp_cols = st.columns(4)
-            for m in range(4):
-                with cmp_cols[m]:
-                    m_met, spec, q_lbl = sweep_metrics[m]
-                    st.markdown(f"**Mode {m}** ({spec['short_label']})")
-                    if res["is_output_color"]:
-                        st.image(sweep_images[m], use_container_width=True, channels="RGB")
-                    elif res["effect_key"] == "edge":
-                        disp = cv2.normalize(sweep_images[m], None, 0, 255, cv2.NORM_MINMAX) if sweep_images[m].max() > sweep_images[m].min() else sweep_images[m]
-                        st.image(disp, use_container_width=True, clamp=True)
-                    else:
-                        st.image(sweep_images[m], use_container_width=True, clamp=True)
-                    st.caption(f"SSIM: {m_met['ssim']:.4f} • {spec['reduction_str']} red.")
-
-            df_sweep = pd.DataFrame(sweep_rows)
-            st.dataframe(df_sweep, use_container_width=True, hide_index=True)
+        df_sweep = pd.DataFrame(sweep_rows)
+        st.dataframe(df_sweep, use_container_width=True, hide_index=True)
 
     # 11. The Idea Card
     st.markdown("""
