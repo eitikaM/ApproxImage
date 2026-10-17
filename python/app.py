@@ -799,6 +799,215 @@ if "processed_results" not in st.session_state:
 # ============================================================================
 # SCREEN 1: CONFIGURATION PAGE
 # ============================================================================
+def run_adaptive_mode_selection(
+    gray_img: np.ndarray,
+    eff_key: str,
+    target_ssim: float,
+    rgb_img: np.ndarray = None,
+    is_col: bool = False,
+    exact_ref: np.ndarray = None,
+    exact_is_col: bool = False,
+    exact_label: str = "",
+    t_ref_ms: float = 0.0,
+    engine: AdaptiveInferenceEngine = None,
+    p_unsafe: float = None,
+    decision_threshold: float = None,
+    precomputed_mode_ssims: dict = None,
+    force_old_gate: bool = False
+) -> dict:
+    """
+    Threshold-aware adaptive multiplier mode selector.
+    - When target_ssim >= 0.99 (or force_old_gate=True):
+        Applies the conservative ML classifier gate (p_unsafe < decision_threshold).
+    - When target_ssim < 0.99:
+        Bypasses the 0.99-trained classifier gate and directly attempts Mode 3 first with
+        real SSIM verification, falling back to Mode 2, Mode 1, then Mode 0.
+    """
+    if engine is None and (p_unsafe is None or decision_threshold is None):
+        engine = get_inference_engine()
+
+    if p_unsafe is None or decision_threshold is None:
+        rf_pred = engine.predict(gray_img, eff_key)
+        p_unsafe = rf_pred["probability_unsafe"]
+        threshold = rf_pred["decision_threshold"]
+    else:
+        threshold = decision_threshold
+
+    if rgb_img is None:
+        rgb_img = gray_img
+
+    if exact_ref is None and precomputed_mode_ssims is None:
+        t_ref_start = time.perf_counter()
+        exact_ref, exact_is_col, exact_label = convolve_multichannel_wrapper(
+            rgb_img, gray_img, eff_key, 0, is_col
+        )
+        t_ref_ms = (time.perf_counter() - t_ref_start) * 1000.0
+
+    target_mode = None
+    approx_res = None
+    is_out_col = exact_is_col
+    out_lbl = exact_label
+    proc_ms = 0.0
+    metrics = None
+    rationale_text = ""
+    m3_fail_ssim = None
+    m3_recorded_ssim = None
+
+    # Gate logic: classifier gate applies ONLY when target_ssim >= 0.99
+    apply_gate = force_old_gate or (target_ssim >= 0.99)
+    try_mode3 = (not apply_gate) or (p_unsafe < threshold)
+
+    # Step 1: Check Mode 3
+    if try_mode3:
+        if precomputed_mode_ssims is not None:
+            m3_metrics = {"ssim": float(precomputed_mode_ssims[3]), "mse": 0.0, "psnr": 0.0}
+            t_proc = 0.0
+            m3_res = None
+            m3_col = is_col
+            m3_lbl = "Mode 3"
+        else:
+            t_start = time.perf_counter()
+            m3_res, m3_col, m3_lbl = convolve_multichannel_wrapper(
+                rgb_img, gray_img, eff_key, 3, is_col
+            )
+            t_proc = (time.perf_counter() - t_start) * 1000.0
+            m3_metrics = compute_multichannel_metrics(exact_ref, m3_res)
+
+        m3_recorded_ssim = m3_metrics["ssim"]
+
+        if m3_metrics["ssim"] >= target_ssim:
+            target_mode = 3
+            approx_res = m3_res
+            is_out_col = m3_col
+            out_lbl = m3_lbl
+            proc_ms = t_proc
+            metrics = m3_metrics
+            if not apply_gate:
+                rationale_text = (
+                    f"Relaxed quality constraint (target SSIM {target_ssim:.2f} < 0.99) bypassed the 0.99-trained classifier gate. "
+                    f"Mode 3 directly verified safe (measured SSIM: {m3_metrics['ssim']:.4f} ≥ {target_ssim:.2f}), "
+                    f"achieving maximum hardware efficiency (28.42% logic cell reduction)."
+                )
+            else:
+                rationale_text = (
+                    f"Mode 3 was predicted safe ({p_unsafe * 100:.1f}% risk < threshold {threshold * 100:.1f}%) "
+                    f"via classifier gate (target SSIM ≥ {target_ssim:.2f}) and verified to satisfy the quality constraint "
+                    f"(measured SSIM: {m3_metrics['ssim']:.4f}), achieving maximum hardware efficiency (28.42% logic cell reduction)."
+                )
+        else:
+            m3_fail_ssim = m3_metrics["ssim"]
+
+    # Step 2: Evaluate Mode 2
+    if target_mode is None:
+        if precomputed_mode_ssims is not None:
+            m2_metrics = {"ssim": float(precomputed_mode_ssims[2]), "mse": 0.0, "psnr": 0.0}
+            t_proc = 0.0
+            m2_res = None
+            m2_col = is_col
+            m2_lbl = "Mode 2"
+        else:
+            t_start = time.perf_counter()
+            m2_res, m2_col, m2_lbl = convolve_multichannel_wrapper(
+                rgb_img, gray_img, eff_key, 2, is_col
+            )
+            t_proc = (time.perf_counter() - t_start) * 1000.0
+            m2_metrics = compute_multichannel_metrics(exact_ref, m2_res)
+
+        if m2_metrics["ssim"] >= target_ssim:
+            target_mode = 2
+            approx_res = m2_res
+            is_out_col = m2_col
+            out_lbl = m2_lbl
+            proc_ms = t_proc
+            metrics = m2_metrics
+            if apply_gate and p_unsafe >= threshold:
+                rationale_text = (
+                    f"Classifier gate (target SSIM ≥ {target_ssim:.2f}) predicted Mode 3 to risk violating the quality constraint "
+                    f"({p_unsafe * 100:.1f}% risk ≥ threshold {threshold * 100:.1f}%). "
+                    f"Mode 2 verified safe (measured SSIM: {m2_metrics['ssim']:.4f}), providing balanced hardware efficiency (13.39% logic cell reduction)."
+                )
+            elif not apply_gate and m3_fail_ssim is not None:
+                rationale_text = (
+                    f"Relaxed quality constraint (target SSIM {target_ssim:.2f} < 0.99) bypassed classifier gate. "
+                    f"Mode 3 violated target (measured: {m3_fail_ssim:.4f} < {target_ssim:.2f}). "
+                    f"Mode 2 directly verified safe (measured SSIM: {m2_metrics['ssim']:.4f}), providing balanced hardware efficiency (13.39% logic cell reduction)."
+                )
+            else:
+                rationale_text = (
+                    f"Mode 3 failed the verified SSIM ≥ {target_ssim:.2f} constraint (measured: {m3_fail_ssim:.4f}). "
+                    f"Mode 2 verified safe (measured SSIM: {m2_metrics['ssim']:.4f}), providing balanced hardware efficiency (13.39% logic cell reduction)."
+                )
+
+    # Step 3: Evaluate Mode 1
+    if target_mode is None:
+        if precomputed_mode_ssims is not None:
+            m1_metrics = {"ssim": float(precomputed_mode_ssims[1]), "mse": 0.0, "psnr": 0.0}
+            t_proc = 0.0
+            m1_res = None
+            m1_col = is_col
+            m1_lbl = "Mode 1"
+        else:
+            t_start = time.perf_counter()
+            m1_res, m1_col, m1_lbl = convolve_multichannel_wrapper(
+                rgb_img, gray_img, eff_key, 1, is_col
+            )
+            t_proc = (time.perf_counter() - t_start) * 1000.0
+            m1_metrics = compute_multichannel_metrics(exact_ref, m1_res)
+
+        if m1_metrics["ssim"] >= target_ssim:
+            target_mode = 1
+            approx_res = m1_res
+            is_out_col = m1_col
+            out_lbl = m1_lbl
+            proc_ms = t_proc
+            metrics = m1_metrics
+            if not apply_gate:
+                rationale_text = (
+                    f"Relaxed quality constraint path: higher approximation modes (Modes 3 & 2) violated the SSIM ≥ {target_ssim:.2f} requirement. "
+                    f"Mode 1 verified safe (measured SSIM: {m1_metrics['ssim']:.4f}), providing low approximation (3.55% logic cell reduction)."
+                )
+            else:
+                rationale_text = (
+                    f"Higher approximation modes (Modes 3 & 2) violated the SSIM ≥ {target_ssim:.2f} requirement. "
+                    f"Mode 1 verified safe (measured SSIM: {m1_metrics['ssim']:.4f}), providing low approximation (3.55% logic cell reduction)."
+                )
+
+    # Step 4: Fallback to Mode 0
+    if target_mode is None:
+        target_mode = 0
+        approx_res = exact_ref
+        is_out_col = exact_is_col
+        out_lbl = exact_label
+        proc_ms = t_ref_ms
+        metrics = {"mse": 0.0, "psnr": float("inf"), "ssim": 1.0}
+        rationale_text = (
+            f"All approximate modes (Modes 1, 2, 3) violated the SSIM ≥ {target_ssim:.2f} quality requirement. "
+            f"The system safely selected Exact Mode 0 for maximum precision."
+        )
+
+    ai_pred = {
+        "selected_mode": target_mode,
+        "probability_unsafe": p_unsafe,
+        "decision_threshold": threshold,
+        "target_ssim_threshold": target_ssim,
+        "gate_applied": bool(apply_gate),
+        "gate_path": "classifier_gate" if apply_gate else "direct_verification",
+        "rationale": rationale_text,
+        "mode3_ssim": m3_recorded_ssim
+    }
+
+    return {
+        "target_mode": target_mode,
+        "approx_res": approx_res,
+        "is_out_col": is_out_col,
+        "out_lbl": out_lbl,
+        "proc_ms": proc_ms,
+        "metrics": metrics,
+        "ai_pred": ai_pred,
+        "m3_ssim": m3_recorded_ssim
+    }
+
+
 def render_configuration_screen():
     # 1. Centered Hero
     st.markdown("""
@@ -979,100 +1188,25 @@ def render_configuration_screen():
             ai_pred = None
             target_ssim = st.session_state.get("ssim_threshold", 0.99)
             if mode_choice == "AI Recommended":
-                rf_pred = engine.predict(gray_img, eff_key)
-                p_unsafe = rf_pred["probability_unsafe"]
-                threshold = rf_pred["decision_threshold"]
-
-                # Conservative Priority:
-                # 1. Try Mode 3 (if ML predicts safe: p_unsafe < threshold)
-                # 2. If Mode 3 is predicted/verified unsafe, evaluate Mode 2
-                # 3. If Mode 2 is unsafe, evaluate Mode 1
-                # 4. If Mode 1 is unsafe, use Exact Mode 0
-                target_mode = None
-                approx_res = None
-                is_out_col = exact_is_col
-                out_lbl = exact_label
-                proc_ms = 0.0
-                metrics = None
-                rationale_text = ""
-                m3_fail_ssim = None
-
-                # Step 1: Check Mode 3 if predicted safe
-                if p_unsafe < threshold:
-                    t_start = time.perf_counter()
-                    m3_res, m3_col, m3_lbl = convolve_multichannel_wrapper(
-                        rgb_img, gray_img, eff_key, 3, is_col
-                    )
-                    t_proc = (time.perf_counter() - t_start) * 1000.0
-                    m3_metrics = compute_multichannel_metrics(exact_ref, m3_res)
-
-                    if m3_metrics["ssim"] >= target_ssim:
-                        target_mode = 3
-                        approx_res = m3_res
-                        is_out_col = m3_col
-                        out_lbl = m3_lbl
-                        proc_ms = t_proc
-                        metrics = m3_metrics
-                        rationale_text = f"Mode 3 was predicted safe ({p_unsafe * 100:.1f}% risk < threshold {threshold * 100:.1f}%) and verified to satisfy the SSIM ≥ {target_ssim:.2f} constraint (measured SSIM: {m3_metrics['ssim']:.4f}), achieving maximum hardware efficiency (28.42% logic cell reduction)."
-                    else:
-                        m3_fail_ssim = m3_metrics["ssim"]
-
-                # Step 2: If Mode 3 was predicted unsafe OR verified unsafe, evaluate Mode 2
-                if target_mode is None:
-                    t_start = time.perf_counter()
-                    m2_res, m2_col, m2_lbl = convolve_multichannel_wrapper(
-                        rgb_img, gray_img, eff_key, 2, is_col
-                    )
-                    t_proc = (time.perf_counter() - t_start) * 1000.0
-                    m2_metrics = compute_multichannel_metrics(exact_ref, m2_res)
-
-                    if m2_metrics["ssim"] >= target_ssim:
-                        target_mode = 2
-                        approx_res = m2_res
-                        is_out_col = m2_col
-                        out_lbl = m2_lbl
-                        proc_ms = t_proc
-                        metrics = m2_metrics
-                        if p_unsafe >= threshold:
-                            rationale_text = f"Mode 3 was predicted to risk violating the SSIM ≥ {target_ssim:.2f} constraint ({p_unsafe * 100:.1f}% risk ≥ threshold {threshold * 100:.1f}%). Mode 2 verified safe (measured SSIM: {m2_metrics['ssim']:.4f}), providing balanced hardware efficiency (13.39% logic cell reduction)."
-                        else:
-                            rationale_text = f"Mode 3 failed the verified SSIM ≥ {target_ssim:.2f} constraint (measured: {m3_fail_ssim:.4f}). Mode 2 verified safe (measured SSIM: {m2_metrics['ssim']:.4f}), providing balanced hardware efficiency (13.39% logic cell reduction)."
-
-                # Step 3: If Mode 2 is unsafe, evaluate Mode 1
-                if target_mode is None:
-                    t_start = time.perf_counter()
-                    m1_res, m1_col, m1_lbl = convolve_multichannel_wrapper(
-                        rgb_img, gray_img, eff_key, 1, is_col
-                    )
-                    t_proc = (time.perf_counter() - t_start) * 1000.0
-                    m1_metrics = compute_multichannel_metrics(exact_ref, m1_res)
-
-                    if m1_metrics["ssim"] >= target_ssim:
-                        target_mode = 1
-                        approx_res = m1_res
-                        is_out_col = m1_col
-                        out_lbl = m1_lbl
-                        proc_ms = t_proc
-                        metrics = m1_metrics
-                        rationale_text = f"Higher approximation modes (Modes 3 & 2) violated the SSIM ≥ {target_ssim:.2f} requirement. Mode 1 verified safe (measured SSIM: {m1_metrics['ssim']:.4f}), providing low approximation (3.55% logic cell reduction)."
-
-                # Step 4: If Mode 1 is unsafe, fall back to Exact Mode 0
-                if target_mode is None:
-                    target_mode = 0
-                    approx_res = exact_ref
-                    is_out_col = exact_is_col
-                    out_lbl = exact_label
-                    proc_ms = t_ref_ms
-                    metrics = {"mse": 0.0, "psnr": float("inf"), "ssim": 1.0}
-                    rationale_text = f"All approximate modes (Modes 1, 2, 3) violated the SSIM ≥ {target_ssim:.2f} quality requirement. The system safely selected Exact Mode 0 for maximum precision."
-
-                ai_pred = {
-                    "selected_mode": target_mode,
-                    "probability_unsafe": p_unsafe,
-                    "decision_threshold": threshold,
-                    "target_ssim_threshold": target_ssim,
-                    "rationale": rationale_text
-                }
+                sel = run_adaptive_mode_selection(
+                    gray_img=gray_img,
+                    eff_key=eff_key,
+                    target_ssim=target_ssim,
+                    rgb_img=rgb_img,
+                    is_col=is_col,
+                    exact_ref=exact_ref,
+                    exact_is_col=exact_is_col,
+                    exact_label=exact_label,
+                    t_ref_ms=t_ref_ms,
+                    engine=engine
+                )
+                target_mode = sel["target_mode"]
+                approx_res = sel["approx_res"]
+                is_out_col = sel["is_out_col"]
+                out_lbl = sel["out_lbl"]
+                proc_ms = sel["proc_ms"]
+                metrics = sel["metrics"]
+                ai_pred = sel["ai_pred"]
             else:
                 MODE_MAP = {
                     "Exact": 0,
@@ -1135,6 +1269,7 @@ def render_results_screen():
     ssim_val = metrics["ssim"]
     quality_label, quality_class = classify_quality(ssim_val)
     exact_time_ms = res.get("exact_proc_time_ms", 0.0)
+    target_ssim = res.get("target_ssim_threshold", 0.99)
     psnr_str = "∞" if metrics["psnr"] == float("inf") else f"{metrics['psnr']:.2f} dB"
 
     # 1. Back to Configuration Button
@@ -1333,7 +1468,7 @@ def render_results_screen():
         <div class="metric-card-pastel">
             <div class="metric-card-label">Image Similarity</div>
             <div class="metric-card-val">{ssim_val * 100:.2f}%</div>
-            <div class="metric-card-sub">SSIM: {ssim_val:.4f} (Constraint ≥ 0.99)</div>
+            <div class="metric-card-sub">SSIM: {ssim_val:.4f} (Constraint ≥ {target_ssim:.2f})</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -1485,7 +1620,7 @@ def render_results_screen():
         <div class="ai-pastel-card">
             <div style="font-size: 0.85rem; font-weight: 800; color: #7B5BC6; text-transform: uppercase; letter-spacing: 0.06em;">AI Recommended Mode</div>
             <div style="color: #34263D; font-weight: 800; font-size: 1.15rem; margin-top: 0.2rem;">{mode_tag}</div>
-            <div style="color: #4A3557; font-size: 0.92rem; margin-top: 0.4rem;"><b>Selected as the highest-efficiency mode that satisfies the SSIM ≥ 0.99 quality requirement.</b></div>
+            <div style="color: #4A3557; font-size: 0.92rem; margin-top: 0.4rem;"><b>Selected as the highest-efficiency mode that satisfies the SSIM ≥ {target_ssim:.2f} quality requirement.</b></div>
             <div style="font-size: 0.82rem; color: #7A6B84; margin-top: 0.45rem; line-height: 1.55;">
                 {rationale_text}<br>
                 <b>Predicted Mode-3 Unsafe Risk:</b> {p_unsafe_pct:.1f}% (Safety Threshold: {thresh_pct:.1f}%)

@@ -1,6 +1,8 @@
 import os
 import re
 import sys
+import cv2
+import numpy as np
 import pytest
 from streamlit.testing.v1 import AppTest
 
@@ -114,3 +116,62 @@ def test_app_ai_recommended_thresholds(thresh):
     assert (selected_mode == 0) or (measured_ssim >= thresh), (
         f"Selected Mode {selected_mode} with SSIM {measured_ssim:.4f} violated constraint {thresh}"
     )
+
+
+@pytest.mark.parametrize("target_thresh", [0.99, 0.95])
+def test_app_smooth_gradient_ai_recommended(target_thresh):
+    """
+    AppTest verification on synthetic 256x256 smooth gradient with Blur & AI Recommended:
+    - At 0.99: assert measured SSIM >= 0.99 or mode 0.
+    - At 0.95: assert the app picked Mode 3 whenever its own displayed Mode 3 SSIM is >= 0.95.
+    """
+    y, x = np.ogrid[:256, :256]
+    grad = np.clip(0.5 * x + 0.3 * y, 0, 255).astype(np.uint8)
+    success, png_bytes = cv2.imencode(".png", grad)
+    assert success, "Failed to encode smooth gradient to PNG bytes"
+    grad_data = png_bytes.tobytes()
+
+    at = AppTest.from_file(APP_PATH, default_timeout=45).run()
+
+    uploader = _get_widget_by_label(at.file_uploader, "Upload an image", partial=True)
+    uploader.upload("smooth_gradient.png", grad_data, "image/png").run()
+
+    r_effect = _get_widget_by_label(at.radio, "Select Filter Effect")
+    r_effect.set_value("Blur").run()
+
+    r_mode = _get_widget_by_label(at.radio, "Select Approximation Level")
+    r_mode.set_value("AI Recommended").run()
+
+    s_thresh = _get_widget_by_label(at.selectbox, "Target SSIM Quality Threshold")
+    s_thresh.set_value(target_thresh).run()
+
+    proc_btn = _get_widget_by_label(at.button, "Process Image", partial=True)
+    proc_btn.click().run()
+
+    assert len(at.exception) == 0, f"Unexpected exception with threshold {target_thresh}: {[e.value for e in at.exception]}"
+
+    res = at.session_state["processed_results"]
+    selected_mode = res["mode"]
+    measured_ssim = res["metrics"]["ssim"]
+
+    # Extract displayed Mode 3 SSIM from multi-mode comparison dataframe
+    displayed_m3_ssim = None
+    if len(at.dataframe) > 0:
+        df_sweep = at.dataframe[0].value
+        m3_row = df_sweep.loc[df_sweep["Mode"] == "Mode 3"]
+        if not m3_row.empty:
+            displayed_m3_ssim = float(m3_row["SSIM vs Exact"].iloc[0])
+
+    if displayed_m3_ssim is None and res.get("ai_prediction"):
+        displayed_m3_ssim = res["ai_prediction"].get("mode3_ssim")
+
+    if target_thresh == 0.99:
+        assert (measured_ssim >= 0.99) or (selected_mode == 0), (
+            f"At 0.99, expected measured SSIM >= 0.99 or Mode 0, got Mode {selected_mode} with SSIM {measured_ssim:.4f}"
+        )
+    elif target_thresh == 0.95:
+        if displayed_m3_ssim is not None and displayed_m3_ssim >= 0.95:
+            assert selected_mode == 3, (
+                f"At 0.95, displayed Mode 3 SSIM is {displayed_m3_ssim:.4f} >= 0.95, but app selected Mode {selected_mode}"
+            )
+
