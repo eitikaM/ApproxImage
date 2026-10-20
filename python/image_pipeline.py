@@ -43,23 +43,7 @@ KERNELS = {
         "is_edge": False
     },
     "edge": {
-        "name": "High-Order Laplacian Edge Detection",
-        "magnitudes": np.array([
-            [16, 32, 16],
-            [32, 192, 32],
-            [16, 32, 16]
-        ], dtype=np.uint8),
-        "signs": np.array([
-            [-1, -1, -1],
-            [-1, +1, -1],
-            [-1, -1, -1]
-        ], dtype=np.int32),
-        "scale": 128.0,
-        "bias": 0,
-        "is_edge": True
-    },
-    "edge_fine": {
-        "name": "Multi-Bit Laplacian Edge Detection",
+        "name": "Laplacian Edge Detection",
         "magnitudes": np.array([
             [11, 21, 11],
             [21, 128, 21],
@@ -108,6 +92,29 @@ KERNELS = {
     }
 }
 
+# Alias for backwards compatibility with any edge_fine references
+KERNELS["edge_fine"] = KERNELS["edge"]
+
+# Documented legacy kernels kept for reproducibility
+KERNELS_LEGACY = {
+    "edge_pow2": {
+        "name": "Legacy Power-of-Two Laplacian Edge Detection",
+        "magnitudes": np.array([
+            [16, 32, 16],
+            [32, 192, 32],
+            [16, 32, 16]
+        ], dtype=np.uint8),
+        "signs": np.array([
+            [-1, -1, -1],
+            [-1, +1, -1],
+            [-1, -1, -1]
+        ], dtype=np.int32),
+        "scale": 128.0,
+        "bias": 0,
+        "is_edge": True
+    }
+}
+
 
 def load_image(image_path: str):
     """
@@ -143,11 +150,11 @@ def convolve_2d_lut(image: np.ndarray, kernel_key: str, mode: int, lut_dir: str 
       5. Signed 32-bit accumulation.
       6. Descaling (division by scale factor), offset addition, and clamping to [0, 255].
     """
-    assert kernel_key in KERNELS, f"Invalid kernel '{kernel_key}'. Choices: {list(KERNELS.keys())}"
+    assert kernel_key in KERNELS or kernel_key in KERNELS_LEGACY, f"Invalid kernel '{kernel_key}'. Choices: {list(KERNELS.keys())}"
     assert mode in (0, 1, 2, 3), "Mode must be 0, 1, 2, or 3."
     assert image.dtype == np.uint8, "Input image must be uint8."
 
-    kernel = KERNELS[kernel_key]
+    kernel = KERNELS[kernel_key] if kernel_key in KERNELS else KERNELS_LEGACY[kernel_key]
     mags = kernel["magnitudes"]
     signs = kernel["signs"]
     scale = kernel["scale"]

@@ -1088,7 +1088,7 @@ def render_configuration_screen():
 
     with ctrl_col1:
         st.markdown("**Processing Effect**")
-        effect_opts = ["Blur", "Edge Detection", "Edge Detection (multi-bit kernel)", "Sharpen", "Emboss"]
+        effect_opts = ["Blur", "Edge Detection", "Sharpen", "Emboss"]
         curr_effect_idx = 0
         if st.session_state["effect_label"] in effect_opts:
             curr_effect_idx = effect_opts.index(st.session_state["effect_label"])
@@ -1103,7 +1103,6 @@ def render_configuration_screen():
         EFFECT_KEY_MAP = {
             "Blur": "blur",
             "Edge Detection": "edge",
-            "Edge Detection (multi-bit kernel)": "edge_fine",
             "Sharpen": "sharpen",
             "Emboss": "emboss"
         }
