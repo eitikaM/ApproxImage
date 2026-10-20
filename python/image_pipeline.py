@@ -54,23 +54,23 @@ KERNELS = {
             [-1, +1, -1],
             [-1, -1, -1]
         ], dtype=np.int32),
-        "scale": 32.0,
+        "scale": 128.0,
         "bias": 0,
         "is_edge": True
     },
     "sharpen": {
         "name": "High-Boost Sharpening",
         "magnitudes": np.array([
-            [11, 21, 11],
-            [21, 192, 21],
-            [11, 21, 11]
+            [10, 19, 10],
+            [19, 244, 19],
+            [10, 19, 10]
         ], dtype=np.uint8),
         "signs": np.array([
             [-1, -1, -1],
             [-1, +1, -1],
             [-1, -1, -1]
         ], dtype=np.int32),
-        "scale": 64.0,
+        "scale": 128.0,
         "bias": 0,
         "is_edge": False
     },
@@ -78,7 +78,7 @@ KERNELS = {
         "name": "Directional 45-degree Emboss",
         "magnitudes": np.array([
             [48, 64, 32],
-            [64, 0, 64],
+            [64, 128, 64],
             [32, 64, 48]
         ], dtype=np.uint8),
         "signs": np.array([

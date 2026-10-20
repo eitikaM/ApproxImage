@@ -29,13 +29,13 @@ This document contains end-to-end verified evaluation metrics across the arithme
 | Edge     | 2 | 0 | 0 | 0.0000 | inf | 1.00000 | True |
 | Edge     | 3 | 0 | 0 | 0.0000 | inf | 1.00000 | True |
 | Sharpen  | 0 | 0 | 0 | 0.0000 | inf | 1.00000 | True |
-| Sharpen  | 1 | 8,329 | 1 | 0.1271 | 57.09 | 0.99907 | True |
-| Sharpen  | 2 | 42,900 | 6 | 4.5256 | 41.57 | 0.99396 | True |
-| Sharpen  | 3 | 60,742 | 26 | 106.2864 | 27.87 | 0.97496 | False |
+| Sharpen  | 1 | 446 | 1 | 0.0068 | 69.80 | 0.99992 | True |
+| Sharpen  | 2 | 31,638 | 2 | 0.7387 | 49.45 | 0.99821 | True |
+| Sharpen  | 3 | 55,185 | 9 | 12.3397 | 37.22 | 0.99502 | True |
 | Emboss   | 0 | 0 | 0 | 0.0000 | inf | 1.00000 | True |
 | Emboss   | 1 | 0 | 0 | 0.0000 | inf | 1.00000 | True |
 | Emboss   | 2 | 0 | 0 | 0.0000 | inf | 1.00000 | True |
-| Emboss   | 3 | 2,958 | 1 | 0.0451 | 61.59 | 0.99967 | True |
+| Emboss   | 3 | 169 | 1 | 0.0026 | 74.02 | 1.00000 | True |
 
 
 ## 3. Hardware Synthesis Results (Yosys 0.66 Standard Cell Flow)
