@@ -51,7 +51,7 @@ The test suite covers:
    - Exact Mode 0 identity against software integer reference oracles.
    - Precomputed LUT file disk integrity and array ordering.
    - Monotonic error divergence across approximation Modes 0–3.
-   - Power-of-two kernel invariance (Edge Detection).
+   - Legacy power-of-two Edge kernel invariance (documented finding; the current multi-bit Edge kernel is not invariant).
    - Metric identity checks (MSE = 0, PSNR = inf, SSIM = 1.0 on identical inputs).
 2. **Elementary Approximate Operators** (`tests/test_approx_ops.py`):
    - Exhaustive unsigned 8×8 LUT multiplication oracle checks (`lut_mul`) in Mode 0.
@@ -170,8 +170,8 @@ yosys results/synthesis_repro/gen_net_configurable.ys
 3. **Configurable Design Overhead vs. Fixed-Mode Savings**:
    The fixed-mode cell reductions (-3.55% for Mode 1, -13.39% for Mode 2, -28.42% for Mode 3) are realized ONLY when the mode is permanently tied high/low at synthesis time, enabling Yosys dead-code elimination to prune redundant logic. In contrast, the **Runtime-Configurable** multiplier (`approximate_multiplier`, 431 logic cells, depth 41) requires runtime multiplexing trees and multi-mode partial-product routing, making it **65 cells larger (+17.76% overhead)** than the dedicated 366-cell exact baseline.
 
-4. **Edge Detection Invariance and Arithmetic Overlap in Approximate Columns**:
-   OR equals addition unless two or more partial products fall in the same approximated column. Coefficients with a single set bit (16, 32, 64, 128) give one partial-product row, so the result is exact. 192 = 128+64 overlaps only from column 7 upward, outside Mode 3's approximated range (columns 0-6). Emboss coefficient 48 = 32+16 overlaps in columns 5-6, which is why only Mode 3 shows error.
+4. **Edge Detection and Kernel Coefficients**:
+   The original Edge kernel (coefficients 16, 32, 192) produced identical output in all four modes. Single-set-bit coefficients (16, 32) generate one partial-product row, so no approximated column ever holds two terms and OR equals addition. 192 = 128 + 64 overlaps only from column 7 upward, outside Mode 3's approximated range (columns 0-6). This kernel is kept as `KERNELS_LEGACY["edge_pow2"]` to document the finding. The current Edge kernel (coefficients 11, 21, 128, zero-DC) exercises the multiplier. On `sample_photo.png`, SSIM versus Mode 0 is 0.999 (Mode 1), 0.903 (Mode 2) and 0.376 (Mode 3). Approximate multiplication handles low-amplitude, zero-mean kernels poorly, because the OR-approximation errors do not cancel in a near-zero output.
 
 ---
 
