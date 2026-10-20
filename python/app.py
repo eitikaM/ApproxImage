@@ -174,7 +174,7 @@ def convolve_multichannel_wrapper(image_rgb: np.ndarray, gray_img: np.ndarray, e
         # Recombine into full-color RGB image
         proc_rgb = np.stack([proc_r, proc_g, proc_b], axis=-1)
         return proc_rgb, True, "Color RGB"
-    elif effect_key == "edge":
+    elif effect_key in ("edge", "edge_fine"):
         # Grayscale edge map
         proc_edge = process_image(gray_img, effect_key, mode)
         return proc_edge, False, "Grayscale Edge Map"
@@ -829,7 +829,8 @@ def run_adaptive_mode_selection(
         engine = get_inference_engine()
 
     if p_unsafe is None or decision_threshold is None:
-        rf_pred = engine.predict(gray_img, eff_key)
+        eff_for_ml = "edge" if eff_key == "edge_fine" else eff_key
+        rf_pred = engine.predict(gray_img, eff_for_ml)
         p_unsafe = rf_pred["probability_unsafe"]
         threshold = rf_pred["decision_threshold"]
     else:
@@ -1087,7 +1088,7 @@ def render_configuration_screen():
 
     with ctrl_col1:
         st.markdown("**Processing Effect**")
-        effect_opts = ["Blur", "Edge Detection", "Sharpen", "Emboss"]
+        effect_opts = ["Blur", "Edge Detection", "Edge Detection (multi-bit kernel)", "Sharpen", "Emboss"]
         curr_effect_idx = 0
         if st.session_state["effect_label"] in effect_opts:
             curr_effect_idx = effect_opts.index(st.session_state["effect_label"])
@@ -1102,6 +1103,7 @@ def render_configuration_screen():
         EFFECT_KEY_MAP = {
             "Blur": "blur",
             "Edge Detection": "edge",
+            "Edge Detection (multi-bit kernel)": "edge_fine",
             "Sharpen": "sharpen",
             "Emboss": "emboss"
         }
@@ -1308,8 +1310,8 @@ def render_results_screen():
 
     active_diff_img = diff_heatmap if "Heatmap" in diff_style_choice else diff_gray
 
-    # PRIMARY 3-COLUMN DISPLAY
-    res_col1, res_col2, res_col3 = st.columns(3)
+    # PRIMARY 2-COLUMN DISPLAY: Exact | Approximate (each with param-box below)
+    res_col1, res_col2 = st.columns(2)
 
     with res_col1:
         st.markdown("""
@@ -1320,11 +1322,23 @@ def render_results_screen():
         """, unsafe_allow_html=True)
         if res["is_output_color"]:
             st.image(res["exact_ref"], use_container_width=True, channels="RGB")
-        elif res["effect_key"] == "edge":
+        elif res["effect_key"] in ("edge", "edge_fine"):
             ref_disp = cv2.normalize(res["exact_ref"], None, 0, 255, cv2.NORM_MINMAX) if res["exact_ref"].max() > res["exact_ref"].min() else res["exact_ref"]
             st.image(ref_disp, use_container_width=True, clamp=True)
         else:
             st.image(res["exact_ref"], use_container_width=True, clamp=True)
+        # Technical info for Mode 0 (exact reference)
+        exact_spec = HARDWARE_SPECS[0]
+        st.markdown(f"""
+        <div class="param-box">
+            <div class="param-line"><span class="param-label"><b>Mode:</b></span> <span class="param-val-accent">Mode 0 — Exact</span></div>
+            <div class="param-line"><span class="param-label"><b>Logic Cells:</b></span> <span class="param-val">{exact_spec['cells']} cells</span></div>
+            <div class="param-line"><span class="param-label"><b>Critical Path:</b></span> <span class="param-val">{exact_spec['critical_path']} logic levels</span></div>
+            <div class="param-line"><span class="param-label"><b>Approximation:</b></span> <span class="param-val">None — Full precision</span></div>
+            <div class="param-line"><span class="param-label"><b>Description:</b></span> <span class="param-val">{exact_spec['desc']}</span></div>
+            <div class="param-line"><span class="param-label"><b>SSIM vs. itself:</b></span> <span class="param-val">1.0000 (Ground Truth)</span></div>
+        </div>
+        """, unsafe_allow_html=True)
 
     with res_col2:
         mode_header_desc = f"Mode {res['mode']} — {hw_spec['level']}" if res["mode"] != 0 else "Mode 0 — Exact Reference"
@@ -1336,13 +1350,28 @@ def render_results_screen():
         """, unsafe_allow_html=True)
         if res["is_output_color"]:
             st.image(res["approx_result"], use_container_width=True, channels="RGB")
-        elif res["effect_key"] == "edge":
+        elif res["effect_key"] in ("edge", "edge_fine"):
             approx_disp = cv2.normalize(res["approx_result"], None, 0, 255, cv2.NORM_MINMAX) if res["approx_result"].max() > res["approx_result"].min() else res["approx_result"]
             st.image(approx_disp, use_container_width=True, clamp=True)
         else:
             st.image(res["approx_result"], use_container_width=True, clamp=True)
+        # Technical info for the selected approximate mode
+        st.markdown(f"""
+        <div class="param-box">
+            <div class="param-line"><span class="param-label"><b>Mode:</b></span> <span class="param-val-accent">{hw_spec['label']}</span></div>
+            <div class="param-line"><span class="param-label"><b>Logic Cells:</b></span> <span class="param-val">{hw_spec['cells']} cells ({hw_spec['reduction_str']} reduction)</span></div>
+            <div class="param-line"><span class="param-label"><b>Critical Path:</b></span> <span class="param-val">{hw_spec['critical_path']} levels — {hw_spec['timing_change_str']}</span></div>
+            <div class="param-line"><span class="param-label"><b>Approximation:</b></span> <span class="param-val">{hw_spec['desc']}</span></div>
+            <div class="param-line"><span class="param-label"><b>Cells Saved:</b></span> <span class="param-val">{hw_spec['saved_cells']} vs Mode 0</span></div>
+            <div class="param-line"><span class="param-label"><b>SSIM vs Mode 0:</b></span> <span class="param-val">{ssim_val:.4f} ({ssim_val * 100:.2f}%)</span></div>
+        </div>
+        """, unsafe_allow_html=True)
 
-    with res_col3:
+    # AMPLIFIED DIFFERENCE MAP (below the two results)
+    st.markdown('<div style="margin-top: 1.5rem;"></div>', unsafe_allow_html=True)
+    diff_col_img, diff_col_stats = st.columns([3, 2])
+
+    with diff_col_img:
         st.markdown("""
         <div class="result-frame">
             <div class="result-frame-header" style="color: #E06C3B;">Amplified Difference Map</div>
@@ -1351,9 +1380,10 @@ def render_results_screen():
         """, unsafe_allow_html=True)
         st.image(active_diff_img, use_container_width=True, clamp=True)
 
+    with diff_col_stats:
         diff_status_str = f"Differs ({diff_stats['changed_pct']:.1f}% px)" if diff_stats["arrays_differ"] else "Identical (0% diff)"
         st.markdown(f"""
-        <div class="param-box">
+        <div class="param-box" style="margin-top: 2.8rem;">
             <div class="param-line"><span class="param-label"><b>Max Pixel Delta:</b></span> <span class="param-val-accent">{diff_stats['max_delta']} levels</span></div>
             <div class="param-line"><span class="param-label"><b>Mean Abs Delta:</b></span> <span class="param-val">{diff_stats['mean_delta']:.4f} levels</span></div>
             <div class="param-line"><span class="param-label"><b>Modified Pixels:</b></span> <span class="param-val">{diff_stats['changed_pct']:.2f}%</span></div>
@@ -1639,7 +1669,7 @@ def render_results_screen():
                         st.markdown(f"**Mode {m}** ({spec['short_label']})")
                         if res["is_output_color"]:
                             st.image(sweep_images[m], use_container_width=True, channels="RGB")
-                        elif res["effect_key"] == "edge":
+                        elif res["effect_key"] in ("edge", "edge_fine"):
                             disp = cv2.normalize(sweep_images[m], None, 0, 255, cv2.NORM_MINMAX) if sweep_images[m].max() > sweep_images[m].min() else sweep_images[m]
                             st.image(disp, use_container_width=True, clamp=True)
                         else:

@@ -15,7 +15,7 @@ from app import compute_pixel_difference_map
 
 APP_PATH = os.path.join(PROJECT_ROOT, "python", "app.py")
 SAMPLE_PATH = os.path.join(PROJECT_ROOT, "images", "sample_photo.png")
-EFFECTS = ["Blur", "Edge Detection", "Sharpen", "Emboss"]
+EFFECTS = ["Blur", "Edge Detection", "Edge Detection (multi-bit kernel)", "Sharpen", "Emboss"]
 
 
 def _get_widget_by_label(widget_list, label_text: str, partial: bool = False):
@@ -75,7 +75,7 @@ def test_app_mode3_smoke(effect):
         f"Displayed Max Pixel Delta ({displayed_delta}) != computed ({expected_delta}) for {effect}"
     )
 
-    if effect in ("Blur", "Sharpen"):
+    if effect in ("Blur", "Sharpen", "Edge Detection (multi-bit kernel)"):
         assert displayed_delta > 0, f"Expected {effect} Mode 3 to have Max Pixel Delta > 0, got {displayed_delta}"
     elif effect == "Edge Detection":
         assert displayed_delta == 0, f"Expected Edge Detection Mode 3 to have Max Pixel Delta == 0, got {displayed_delta}"

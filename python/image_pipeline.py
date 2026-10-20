@@ -58,6 +58,22 @@ KERNELS = {
         "bias": 0,
         "is_edge": True
     },
+    "edge_fine": {
+        "name": "Multi-Bit Laplacian Edge Detection",
+        "magnitudes": np.array([
+            [11, 21, 11],
+            [21, 128, 21],
+            [11, 21, 11]
+        ], dtype=np.uint8),
+        "signs": np.array([
+            [-1, -1, -1],
+            [-1, +1, -1],
+            [-1, -1, -1]
+        ], dtype=np.int32),
+        "scale": 128.0,
+        "bias": 0,
+        "is_edge": True
+    },
     "sharpen": {
         "name": "High-Boost Sharpening",
         "magnitudes": np.array([

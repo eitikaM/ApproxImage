@@ -52,13 +52,22 @@ def oracle_convolve_exact(image: np.ndarray, effect_key: str) -> np.ndarray:
     return np.clip(res, 0, 255).astype(np.uint8)
 
 
-@pytest.mark.parametrize("effect", ["blur", "edge", "sharpen", "emboss"])
+@pytest.mark.parametrize("effect", ["blur", "edge", "edge_fine", "sharpen", "emboss"])
 def test_mode0_matches_independent_oracle(effect):
     """Mode 0 output must exactly equal an independent oracle using plain integer multiplication."""
     img, _ = load_image(SAMPLE_IMAGE_PATH)
     mode0_out = process_image(img, effect, 0)
     oracle_out = oracle_convolve_exact(img, effect)
     np.testing.assert_array_equal(mode0_out, oracle_out, err_msg=f"Mode 0 diverged from oracle on {effect}")
+
+
+def test_edge_fine_mode3_differs():
+    """For edge_fine (multi-bit kernel), Mode 3 differs from Mode 0 on sample_photo."""
+    img, _ = load_image(SAMPLE_IMAGE_PATH)
+    ref = process_image(img, "edge_fine", 0)
+    out3 = process_image(img, "edge_fine", 3)
+    diff = int(np.sum(out3 != ref))
+    assert diff > 0, f"Expected Mode 3 to differ from Mode 0 for edge_fine, got diff={diff}"
 
 
 def test_load_lut_order_matches_disk():
