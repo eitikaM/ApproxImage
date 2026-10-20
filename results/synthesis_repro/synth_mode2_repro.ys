@@ -1,0 +1,8 @@
+# Mode 2 Reproduction Synthesis (Medium Approximation)
+read_verilog verilog/structural_multiplier.v verilog/approximate_multiplier.v verilog/synthesis_mode2.v
+synth -top synthesis_mode2
+flatten
+opt
+abc -g gates
+stat
+ltp

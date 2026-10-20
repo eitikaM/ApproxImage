@@ -1,0 +1,8 @@
+# Mode 3 Reproduction Synthesis (High Approximation)
+read_verilog verilog/structural_multiplier.v verilog/approximate_multiplier.v verilog/synthesis_mode3.v
+synth -top synthesis_mode3
+flatten
+opt
+abc -g gates
+stat
+ltp

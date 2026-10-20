@@ -1,10 +1,27 @@
 # ApproxImage: Application-Aware Approximate Multiplier Framework
 
-Approximate computing framework exploring runtime-reconfigurable and fixed-mode lower-part-OR approximate multipliers for image processing filters (Blur, Edge Detection, Sharpen, and Emboss).
+Approximate computing framework exploring runtime-reconfigurable and fixed-mode lower-part-OR approximate multipliers for image processing filters (Blur, Edge Detection, Sharpen, and Emboss) and computer vision applications (Alpha Blending, RGB-to-Grayscale conversion, and Matrix Operations).
 
 ---
 
-## 1. Running the Interactive Web Application
+## 1. Prerequisites & Tool Setup
+
+### A. Python Environment
+- **Python**: 3.10+ (tested on Python 3.12 / 3.13)
+- **Install Python Dependencies**:
+  ```bash
+  pip install -r requirements.txt
+  ```
+  Core libraries: `numpy`, `opencv-python`, `scikit-image`, `scikit-learn`, `joblib`, `streamlit`, `pytest`.
+
+### B. EDA & Hardware Simulation Tools (Optional for RTL verification)
+- **Yosys Open SYnthesis Suite**: Tested with Yosys 0.66 (git sha1 `7f8fdfd8d`). Required for generic gate technology-independent synthesis.
+- **Icarus Verilog**: Tested with `iverilog` and `vvp` v12.0 (e.g. from MSYS2 UCRT64 / MinGW64). Required for live gate-level netlist and behavioral testbench simulations.
+- Ensure `yosys`, `iverilog`, and `vvp` are on your system `PATH` (e.g., `D:\ucrt64\bin` or `C:\msys64\ucrt64\bin`).
+
+---
+
+## 2. Running the Interactive Web Application
 
 Launch the Streamlit graphical interface:
 
@@ -21,21 +38,52 @@ The application provides:
 
 ---
 
-## 2. Running Automated Tests
+## 3. Running Automated Tests
 
-Run the full pytest suite (regression tests and Streamlit AppTest smoke tests):
+Run the full pytest suite (108 tests passing):
 
 ```bash
 python -m pytest tests -v
 ```
 
-This executes:
-- Pipeline regression tests verifying exact mode identity against software integer oracles, LUT disk integrity, monotonic error divergence, and metric identities (`tests/test_pipeline_regression.py`).
-- Real Streamlit `AppTest` smoke tests verifying error-free rendering, amplified difference metrics, threshold-aware mode selection on smooth gradients, and 3-channel RGB gradient processing (`tests/test_app_smoke.py`).
+The test suite covers:
+1. **Pipeline Regression Tests** (`tests/test_pipeline_regression.py`):
+   - Exact Mode 0 identity against software integer reference oracles.
+   - Precomputed LUT file disk integrity and array ordering.
+   - Monotonic error divergence across approximation Modes 0–3.
+   - Power-of-two kernel invariance (Edge Detection).
+   - Metric identity checks (MSE = 0, PSNR = inf, SSIM = 1.0 on identical inputs).
+2. **Elementary Approximate Operators** (`tests/test_approx_ops.py`):
+   - Exhaustive unsigned 8×8 LUT multiplication oracle checks (`lut_mul`) in Mode 0.
+   - Non-zero approximation divergence in Modes 1–3.
+   - Signed matrix multiplication (`signed_matmul`) sign-magnitude reconstruction and int32 accumulation.
+   - Input shape validation, broadcasting, and error handling.
+3. **Downstream Applications** (`tests/test_applications.py`):
+   - Alpha image blending (`alpha_blend`) exact integer rounding oracle matching in Mode 0 across grayscale and RGB.
+   - Endpoint boundaries ($\alpha = 0$, $\alpha = 255$) and mid-range blending.
+   - RGB-to-grayscale conversion (`rgb_to_grayscale`) fixed-point BT.601 integer coefficients ($77, 150, 29$) oracle checks.
+   - Approximation behavior across Modes 1–3 and strict input validation.
+4. **Streamlit GUI Smoke Tests** (`tests/test_app_smoke.py`):
+   - Headless `AppTest` verification of error-free rendering across configuration, processing, and results screens.
+   - Amplified difference heatmap calculation, parameter widgets, and selector recommendations.
 
 ---
 
-## 3. Re-Running Synthesis & Verification Reports
+## 4. Approximate Arithmetic & Applications
+
+In addition to 2D image filtering, the framework provides modular approximate arithmetic operators and downstream applications:
+
+### A. Core Approximate Operators (`python/approx_ops.py`)
+- `lut_mul(a, b, mode)`: Elementwise unsigned 8×8 multiplication using verified precomputed LUTs loaded via `multiplier_model.load_lut`. Operands are strictly bounded to $[0, 255]$ with integer output in `int32`.
+- `signed_matmul(X, W, mode)`: Sign-magnitude matrix product $X \times W$. Magnitudes $|X|$ and $|W|$ are processed through `lut_mul`, original signs are restored via XOR, and terms are accumulated into an `int32` result.
+
+### B. Image Applications (`python/applications.py`)
+- `alpha_blend(img_a, img_b, alpha, mode)`: Blends two images using the integer fixed-point formulation $(A \cdot \alpha + B \cdot (255 - \alpha) + 128) \gg 8$, routing every product through `lut_mul`.
+- `rgb_to_grayscale(img_rgb, mode)`: Converts RGB images to grayscale using ITU-R BT.601 fixed-point weights $(R \cdot 77 + G \cdot 150 + B \cdot 29) \gg 8$ via `lut_mul`.
+
+---
+
+## 5. Re-Running Synthesis & Verification Reports
 
 ### A. Gate-Level Netlist Verification & Comprehensive Verified Report
 Re-runs Icarus Verilog live netlist simulations (`sim_mode*.vvp`, `sim_configurable.vvp`), parses synthesis logs from `results/synthesis_repro/`, computes arithmetic error rates over all 65,536 vector pairs, and generates `results/reports/verified_results.md`:
@@ -52,9 +100,17 @@ python python/evaluate_selector_thresholds.py
 ```
 Outputs `results/reports/selector_threshold_eval.md`.
 
-### C. RTL Synthesis Reproduction Flow
-To reproduce the technology-independent generic gate synthesis using Yosys:
+### C. Holdout Dataset Evaluation
+Evaluates the trained adaptive selector model on unseen holdout images:
 
+```bash
+python python/evaluate_holdout.py
+```
+
+### D. RTL Synthesis Reproduction Flow
+To reproduce the technology-independent generic gate synthesis using Yosys (`abc -g gates`):
+
+#### 1. Running Reproduction Scripts (`results/synthesis_repro/`)
 ```bash
 yosys results/synthesis_repro/synth_mode0_repro.ys
 yosys results/synthesis_repro/synth_mode0_same_rtl.ys
@@ -64,9 +120,44 @@ yosys results/synthesis_repro/synth_mode3_repro.ys
 yosys results/synthesis_repro/synth_configurable.ys
 ```
 
+#### 2. Canonical Synthesis Scripts (`results/`)
+Alternatively, the canonical synthesis scripts can be run directly from the project root:
+```bash
+yosys results/synth_exact.ys
+yosys results/synth_mode1.ys
+yosys results/synth_mode2.ys
+yosys results/synth_mode3.ys
+yosys results/synth_configurable.ys
+```
+
+To redirect logs to `results/synthesis_repro/` for automated verification reporting:
+```bash
+yosys -l results/synthesis_repro/synth_mode0_repro.log results/synthesis_repro/synth_mode0_repro.ys
+yosys -l results/synthesis_repro/synth_mode1_repro.log results/synthesis_repro/synth_mode1_repro.ys
+yosys -l results/synthesis_repro/synth_mode2_repro.log results/synthesis_repro/synth_mode2_repro.ys
+yosys -l results/synthesis_repro/synth_mode3_repro.log results/synthesis_repro/synth_mode3_repro.ys
+yosys -l results/synthesis_repro/synth_configurable_repro.log results/synthesis_repro/synth_configurable.ys
+```
+
+#### 3. Gate-Level Netlist Generation
+To synthesize and export gate-level netlists for Icarus Verilog simulation:
+```bash
+yosys results/synthesis_repro/gen_netlists.ys
+yosys results/synthesis_repro/gen_net_configurable.ys
+```
+
+#### Expected Synthesis Results Summary (Yosys 0.66)
+| Design Top | Multiplier Mode | Total Cells | Scopeinfo | Logic Gates | Cell Savings | LTP (Gate Depth) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| `structural_multiplier` | Exact Mode 0 | 430 | 64 | 366 | Baseline (0%) | 40 |
+| `synthesis_mode1` | Fixed Mode 1 | 418 | 65 | 353 | -3.55% | 41 |
+| `synthesis_mode2` | Fixed Mode 2 | 382 | 65 | 317 | -13.39% | 34 |
+| `synthesis_mode3` | Fixed Mode 3 | 327 | 65 | 262 | -28.42% | 29 |
+| `approximate_multiplier` | Runtime-Configurable | 495 | 64 | 431 | +17.76% (overhead) | 41 |
+
 ---
 
-## 4. Methodological Limitations & Architectural Insights
+## 6. Methodological Limitations & Architectural Insights
 
 *(Copied directly from `results/reports/verified_results.md`)*
 
@@ -84,7 +175,7 @@ yosys results/synthesis_repro/synth_configurable.ys
 
 ---
 
-## 5. Repository Directory Structure
+## 7. Repository Directory Structure
 
 ```
 approximate_multipliers/
@@ -96,6 +187,8 @@ approximate_multipliers/
 ├── python/
 │   ├── adaptive_inference.py        # Standalone ML inference engine for mode prediction
 │   ├── app.py                       # Streamlit graphical application and adaptive selector
+│   ├── applications.py              # Downstream image applications (Alpha blending, Grayscale)
+│   ├── approx_ops.py                # Core LUT multiply and signed matmul operators
 │   ├── evaluate_holdout.py          # Holdout validation script
 │   ├── evaluate_selector_thresholds.py # Threshold-awareness evaluation script
 │   ├── image_pipeline.py            # Convolution, multichannel processing, and metrics
@@ -106,15 +199,33 @@ approximate_multipliers/
 │   ├── luts/                        # Verified 256x256 precomputed multiplier LUTs (.npy, .hex)
 │   ├── ml/                          # Trained model bundle, holdout results, and feature metrics
 │   ├── reports/                     # Generated verified results & evaluation reports
-│   └── synthesis_repro/             # Reproducible Yosys synthesis scripts, logs, and netlists
+│   │   ├── verified_results.md      # Verified results report (error, 16 combos, netlists)
+│   │   └── selector_threshold_eval.md # Threshold-awareness evaluation report
+│   ├── synthesis_repro/             # Reproducible Yosys synthesis scripts, logs, and netlists
+│   │   ├── synth_mode0_repro.ys     # Synthesis script for Mode 0 baseline (structural_multiplier)
+│   │   ├── synth_mode0_same_rtl.ys  # Synthesis script for Mode 0 wrapper (approximate_multiplier mode 00)
+│   │   ├── synth_mode1_repro.ys     # Synthesis script for Mode 1 (synthesis_mode1 wrapper)
+│   │   ├── synth_mode2_repro.ys     # Synthesis script for Mode 2 (synthesis_mode2 wrapper)
+│   │   ├── synth_mode3_repro.ys     # Synthesis script for Mode 3 (synthesis_mode3 wrapper)
+│   │   ├── synth_configurable.ys    # Synthesis script for runtime-configurable approximate_multiplier
+│   │   ├── gen_netlists.ys          # Netlist generation script for Modes 0-3
+│   │   └── gen_net_configurable.ys  # Netlist generation script for runtime-configurable multiplier
+│   ├── synth_exact.ys               # Canonical Mode 0 synthesis script
+│   ├── synth_mode1.ys               # Canonical Mode 1 synthesis script
+│   ├── synth_mode2.ys               # Canonical Mode 2 synthesis script
+│   ├── synth_mode3.ys               # Canonical Mode 3 synthesis script
+│   ├── synth_configurable.ys        # Canonical configurable synthesis script
+│   └── synthesis_results.csv        # Summary table of hardware synthesis gate counts
 ├── tests/
 │   ├── test_app_smoke.py            # Streamlit AppTest GUI smoke tests
+│   ├── test_applications.py         # Tests for alpha blending and grayscale conversion
+│   ├── test_approx_ops.py           # Tests for LUT multiply and signed matrix multiplication
 │   └── test_pipeline_regression.py  # Image pipeline and multiplier arithmetic regression tests
 ├── verilog/
 │   ├── approximate_multiplier.v     # Synthesizable runtime-configurable 8x8 multiplier RTL
 │   ├── approximate_testbench.v      # Exhaustive 65,536-vector Verilog testbench
 │   ├── structural_multiplier.v      # Baseline exact 8x8 structural CSA multiplier
-│   └── synthesis_mode*.v            # Mode-specific synthesis RTL wrappers
-├── README.md                        # Project documentation and guide
+│   └── synthesis_mode*.v            # Mode-specific synthesis RTL wrappers (modes 1, 2, 3, exact)
+├── README.md                        # Project documentation and reproduction guide
 └── requirements.txt                 # Project Python dependencies
 ```
