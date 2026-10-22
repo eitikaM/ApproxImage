@@ -78,12 +78,12 @@ KERNELS = {
         "name": "Directional 45-degree Emboss",
         "magnitudes": np.array([
             [48, 64, 32],
-            [64, 128, 64],
+            [64, 0, 64],
             [32, 64, 48]
         ], dtype=np.uint8),
         "signs": np.array([
             [-1, -1, -1],
-            [-1, +1, +1],
+            [-1, 0, +1],
             [+1, +1, +1]
         ], dtype=np.int32),
         "scale": 128.0,

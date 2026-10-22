@@ -60,9 +60,9 @@ def test_app_mode3_smoke(effect):
     # Assert no traceback / unhandled exceptions
     assert len(at.exception) == 0, f"Unexpected exceptions for {effect}: {[e.value for e in at.exception]}"
 
-    # Assert results page rendered Difference Map
+    # Assert results page rendered
     all_markdown = " ".join(m.value for m in at.markdown)
-    assert "Amplified Difference Map" in all_markdown, f"'Amplified Difference Map' not found in page markdown for {effect}"
+    assert "Exact Result" in all_markdown, f"'Exact Result' not found in page markdown for {effect}"
 
     # Verify Max Pixel Delta values
     displayed_delta = _get_displayed_max_pixel_delta(at)

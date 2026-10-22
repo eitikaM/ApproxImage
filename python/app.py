@@ -1284,30 +1284,16 @@ def render_results_screen():
     </div>
     """, unsafe_allow_html=True)
 
-    # Compute Amplified Difference Map for visualization
+    # Compute difference map and statistics
     diff_gray, diff_heatmap, diff_stats = compute_pixel_difference_map(res["exact_ref"], res["approx_result"], amp_factor=15.0)
+    active_diff_img = diff_heatmap
 
-    # Header and difference map style toggle
+    # Header
     st.markdown("""
-    <div style="text-align: center; margin-bottom: 0.9rem;">
-        <span class="vs-pill">EXACT RESULT vs APPROXIMATE RESULT & AMPLIFIED DIFFERENCE MAP</span>
+    <div style="text-align: center; margin-bottom: 1.2rem;">
+        <span class="vs-pill">EXACT RESULT vs APPROXIMATE RESULT</span>
     </div>
     """, unsafe_allow_html=True)
-
-    c_toggle1, c_toggle2 = st.columns([2, 1])
-    with c_toggle1:
-        st.caption("Side-by-side comparison with an amplified difference map to reveal subtle approximation errors.")
-    with c_toggle2:
-        diff_style_choice = st.radio(
-            "Difference View Style",
-            options=["Heatmap (Inferno)", "Grayscale (15×)"],
-            horizontal=True,
-            index=0 if "Heatmap" in st.session_state.get("diff_view_style", "Heatmap") else 1,
-            label_visibility="collapsed"
-        )
-        st.session_state["diff_view_style"] = diff_style_choice
-
-    active_diff_img = diff_heatmap if "Heatmap" in diff_style_choice else diff_gray
 
     # PRIMARY 2-COLUMN DISPLAY: Exact | Approximate (each with param-box below)
     res_col1, res_col2 = st.columns(2)
@@ -1366,33 +1352,18 @@ def render_results_screen():
         </div>
         """, unsafe_allow_html=True)
 
-    # AMPLIFIED DIFFERENCE MAP (below the two results)
-    st.markdown('<div style="margin-top: 1.5rem;"></div>', unsafe_allow_html=True)
-    diff_col_img, diff_col_stats = st.columns([3, 2])
-
-    with diff_col_img:
-        st.markdown("""
-        <div class="result-frame">
-            <div class="result-frame-header" style="color: #E06C3B;">Amplified Difference Map</div>
-            <div class="result-frame-sub">Visualization Only • 15× Magnified (max across colour channels for RGB)</div>
-        </div>
-        """, unsafe_allow_html=True)
-        st.image(active_diff_img, use_container_width=True, clamp=True)
-
-    with diff_col_stats:
-        diff_status_str = f"Differs ({diff_stats['changed_pct']:.1f}% px)" if diff_stats["arrays_differ"] else "Identical (0% diff)"
-        st.markdown(f"""
-        <div class="param-box" style="margin-top: 2.8rem;">
+    # Pixel difference statistics
+    diff_status_str = f"Differs ({diff_stats['changed_pct']:.1f}% px)" if diff_stats["arrays_differ"] else "Identical (0% diff)"
+    st.markdown(f"""
+    <div class="param-box" style="margin-top: 1.2rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem;">
             <div class="param-line"><span class="param-label"><b>Max Pixel Delta:</b></span> <span class="param-val-accent">{diff_stats['max_delta']} levels</span></div>
             <div class="param-line"><span class="param-label"><b>Mean Abs Delta:</b></span> <span class="param-val">{diff_stats['mean_delta']:.4f} levels</span></div>
             <div class="param-line"><span class="param-label"><b>Modified Pixels:</b></span> <span class="param-val">{diff_stats['changed_pct']:.2f}%</span></div>
             <div class="param-line"><span class="param-label"><b>Output Arrays:</b></span> <span class="param-val" style="color: {'#D45B7A' if diff_stats['arrays_differ'] else '#1F7A61'};">{diff_status_str}</span></div>
-            <div class="param-line"><span class="param-label"><b>Amplification:</b></span> <span class="param-val">15× Visualization</span></div>
-            <div style="font-size: 0.78rem; color: #8C7D96; margin-top: 0.45rem; font-style: italic; border-top: 1px dashed rgba(155, 126, 222, 0.2); padding-top: 0.35rem;">
-                Amplified for visual contrast only; real output is not altered.
-            </div>
         </div>
-        """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
     # ONE compact metrics row (SSIM, PSNR, MSE, logic cells saved, logic depth)
     st.markdown('<div style="margin-top: 1rem; margin-bottom: 0.8rem;"></div>', unsafe_allow_html=True)
