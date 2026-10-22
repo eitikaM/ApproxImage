@@ -1,0 +1,1217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project source="5.0.0" version="1.0">
+  This file is intended to be loaded by Logisim-evolution v5.0.0(https://github.com/logisim-evolution/).
+  <lib desc="#Wiring" name="0"/>
+  <lib desc="#Gates" name="1"/>
+  <main name="main"/>
+  <options>
+    <a name="gateUndefined" val="ignore"/>
+    <a name="simlimit" val="1000"/>
+    <a name="simrand" val="0"/>
+  </options>
+  <circuit name="multiplier">
+    <a name="appearance" val="logisim_evolution"/>
+    <a name="circuit" val="multiplier"/>
+    <a name="circuitnamedboxfixedsize" val="true"/>
+    <a name="simulationFrequency" val="1.0"/>
+    <!-- Input Port A[7:0] -->
+    <comp lib="0" loc="(100,100)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="width" val="8"/>
+      <a name="label" val="A"/>
+    </comp>
+    <comp lib="0" loc="(100,100)" name="Splitter">
+      <a name="appear" val="right"/>
+      <a name="fanout" val="8"/>
+      <a name="incoming" val="8"/>
+    </comp>
+    <wire from="(120,110)" to="(160,110)"/>
+    <comp lib="0" loc="(160,110)" name="Tunnel"><a name="label" val="net_2"/></comp>
+    <wire from="(120,120)" to="(280,120)"/>
+    <comp lib="0" loc="(280,120)" name="Tunnel"><a name="label" val="net_3"/></comp>
+    <wire from="(120,130)" to="(160,130)"/>
+    <comp lib="0" loc="(160,130)" name="Tunnel"><a name="label" val="net_4"/></comp>
+    <wire from="(120,140)" to="(280,140)"/>
+    <comp lib="0" loc="(280,140)" name="Tunnel"><a name="label" val="net_5"/></comp>
+    <wire from="(120,150)" to="(160,150)"/>
+    <comp lib="0" loc="(160,150)" name="Tunnel"><a name="label" val="net_6"/></comp>
+    <wire from="(120,160)" to="(280,160)"/>
+    <comp lib="0" loc="(280,160)" name="Tunnel"><a name="label" val="net_7"/></comp>
+    <wire from="(120,170)" to="(160,170)"/>
+    <comp lib="0" loc="(160,170)" name="Tunnel"><a name="label" val="net_8"/></comp>
+    <wire from="(120,180)" to="(280,180)"/>
+    <comp lib="0" loc="(280,180)" name="Tunnel"><a name="label" val="net_9"/></comp>
+    <!-- Input Port B[7:0] -->
+    <comp lib="0" loc="(100,250)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="width" val="8"/>
+      <a name="label" val="B"/>
+    </comp>
+    <comp lib="0" loc="(100,250)" name="Splitter">
+      <a name="appear" val="right"/>
+      <a name="fanout" val="8"/>
+      <a name="incoming" val="8"/>
+    </comp>
+    <wire from="(120,260)" to="(160,260)"/>
+    <comp lib="0" loc="(160,260)" name="Tunnel"><a name="label" val="net_10"/></comp>
+    <wire from="(120,270)" to="(280,270)"/>
+    <comp lib="0" loc="(280,270)" name="Tunnel"><a name="label" val="net_11"/></comp>
+    <wire from="(120,280)" to="(160,280)"/>
+    <comp lib="0" loc="(160,280)" name="Tunnel"><a name="label" val="net_12"/></comp>
+    <wire from="(120,290)" to="(280,290)"/>
+    <comp lib="0" loc="(280,290)" name="Tunnel"><a name="label" val="net_13"/></comp>
+    <wire from="(120,300)" to="(160,300)"/>
+    <comp lib="0" loc="(160,300)" name="Tunnel"><a name="label" val="net_14"/></comp>
+    <wire from="(120,310)" to="(280,310)"/>
+    <comp lib="0" loc="(280,310)" name="Tunnel"><a name="label" val="net_15"/></comp>
+    <wire from="(120,320)" to="(160,320)"/>
+    <comp lib="0" loc="(160,320)" name="Tunnel"><a name="label" val="net_16"/></comp>
+    <wire from="(120,330)" to="(280,330)"/>
+    <comp lib="0" loc="(280,330)" name="Tunnel"><a name="label" val="net_17"/></comp>
+    <!-- Output Port P[15:0] -->
+    <comp lib="0" loc="(100,400)" name="Pin">
+      <a name="appearance" val="classic"/>
+      <a name="facing" val="west"/>
+      <a name="width" val="16"/>
+      <a name="label" val="P"/>
+      <a name="type" val="output"/>
+    </comp>
+    <comp lib="0" loc="(100,400)" name="Splitter">
+      <a name="appear" val="right"/>
+      <a name="fanout" val="16"/>
+      <a name="incoming" val="16"/>
+    </comp>
+    <wire from="(120,410)" to="(160,410)"/>
+    <comp lib="0" loc="(160,410)" name="Tunnel"><a name="label" val="net_18"/></comp>
+    <wire from="(120,420)" to="(280,420)"/>
+    <comp lib="0" loc="(280,420)" name="Tunnel"><a name="label" val="net_19"/></comp>
+    <wire from="(120,430)" to="(160,430)"/>
+    <comp lib="0" loc="(160,430)" name="Tunnel"><a name="label" val="net_20"/></comp>
+    <wire from="(120,440)" to="(280,440)"/>
+    <comp lib="0" loc="(280,440)" name="Tunnel"><a name="label" val="net_21"/></comp>
+    <wire from="(120,450)" to="(160,450)"/>
+    <comp lib="0" loc="(160,450)" name="Tunnel"><a name="label" val="net_22"/></comp>
+    <wire from="(120,460)" to="(280,460)"/>
+    <comp lib="0" loc="(280,460)" name="Tunnel"><a name="label" val="net_23"/></comp>
+    <wire from="(120,470)" to="(160,470)"/>
+    <comp lib="0" loc="(160,470)" name="Tunnel"><a name="label" val="net_24"/></comp>
+    <wire from="(120,480)" to="(280,480)"/>
+    <comp lib="0" loc="(280,480)" name="Tunnel"><a name="label" val="net_25"/></comp>
+    <wire from="(120,490)" to="(160,490)"/>
+    <comp lib="0" loc="(160,490)" name="Tunnel"><a name="label" val="net_26"/></comp>
+    <wire from="(120,500)" to="(280,500)"/>
+    <comp lib="0" loc="(280,500)" name="Tunnel"><a name="label" val="net_27"/></comp>
+    <wire from="(120,510)" to="(160,510)"/>
+    <comp lib="0" loc="(160,510)" name="Tunnel"><a name="label" val="net_28"/></comp>
+    <wire from="(120,520)" to="(280,520)"/>
+    <comp lib="0" loc="(280,520)" name="Tunnel"><a name="label" val="net_29"/></comp>
+    <wire from="(120,530)" to="(160,530)"/>
+    <comp lib="0" loc="(160,530)" name="Tunnel"><a name="label" val="net_30"/></comp>
+    <wire from="(120,540)" to="(280,540)"/>
+    <comp lib="0" loc="(280,540)" name="Tunnel"><a name="label" val="net_31"/></comp>
+    <wire from="(120,550)" to="(160,550)"/>
+    <comp lib="0" loc="(160,550)" name="Tunnel"><a name="label" val="net_32"/></comp>
+    <wire from="(120,560)" to="(280,560)"/>
+    <comp lib="0" loc="(280,560)" name="Tunnel"><a name="label" val="net_33"/></comp>
+    <!-- Constant Generators -->
+    <comp lib="0" loc="(60,30)" name="Constant"><a name="value" val="0x0"/></comp>
+    <comp lib="0" loc="(60,30)" name="Tunnel"><a name="label" val="net_0"/></comp>
+    <comp lib="0" loc="(60,50)" name="Constant"><a name="value" val="0x0"/></comp>
+    <comp lib="0" loc="(60,50)" name="Tunnel"><a name="label" val="net_str_0"/></comp>
+    <comp lib="0" loc="(60,70)" name="Constant"><a name="value" val="0x1"/></comp>
+    <comp lib="0" loc="(60,70)" name="Tunnel"><a name="label" val="net_1"/></comp>
+    <comp lib="0" loc="(60,90)" name="Constant"><a name="value" val="0x1"/></comp>
+    <comp lib="0" loc="(60,90)" name="Tunnel"><a name="label" val="net_str_1"/></comp>
+    <!-- Gate Primitives Connected via Tunnels -->
+    <comp lib="1" loc="(300,650)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(280,650)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_14"/></comp>
+    <comp lib="0" loc="(300,650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_34"/></comp>
+    <comp lib="1" loc="(560,650)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(540,650)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_13"/></comp>
+    <comp lib="0" loc="(560,650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_35"/></comp>
+    <comp lib="1" loc="(820,650)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(800,650)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_17"/></comp>
+    <comp lib="0" loc="(820,650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_36"/></comp>
+    <comp lib="1" loc="(1080,650)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(1060,650)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_16"/></comp>
+    <comp lib="0" loc="(1080,650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_37"/></comp>
+    <comp lib="1" loc="(1340,650)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(1320,650)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_15"/></comp>
+    <comp lib="0" loc="(1340,650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_38"/></comp>
+    <comp lib="1" loc="(1600,650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_2"/></comp>
+    <comp lib="0" loc="(1570,660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_17"/></comp>
+    <comp lib="0" loc="(1600,650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_39"/></comp>
+    <comp lib="1" loc="(1860,650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_5"/></comp>
+    <comp lib="0" loc="(1830,660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_14"/></comp>
+    <comp lib="0" loc="(1860,650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_40"/></comp>
+    <comp lib="1" loc="(2120,650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_13"/></comp>
+    <comp lib="0" loc="(2090,660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_6"/></comp>
+    <comp lib="0" loc="(2120,650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_41"/></comp>
+    <comp lib="1" loc="(300,750)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_12"/></comp>
+    <comp lib="0" loc="(270,760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_7"/></comp>
+    <comp lib="0" loc="(300,750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_42"/></comp>
+    <comp lib="1" loc="(560,750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_8"/></comp>
+    <comp lib="0" loc="(530,760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_11"/></comp>
+    <comp lib="0" loc="(560,750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_43"/></comp>
+    <comp lib="1" loc="(820,750)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_9"/></comp>
+    <comp lib="0" loc="(790,760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_10"/></comp>
+    <comp lib="0" loc="(820,750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_44"/></comp>
+    <comp lib="1" loc="(1080,750)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_9"/></comp>
+    <comp lib="0" loc="(1050,760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_11"/></comp>
+    <comp lib="0" loc="(1080,750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_45"/></comp>
+    <comp lib="1" loc="(1340,750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_8"/></comp>
+    <comp lib="0" loc="(1310,760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_10"/></comp>
+    <comp lib="0" loc="(1340,750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_46"/></comp>
+    <comp lib="1" loc="(1600,750)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_43"/></comp>
+    <comp lib="0" loc="(1570,760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_44"/></comp>
+    <comp lib="0" loc="(1600,750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_47"/></comp>
+    <comp lib="1" loc="(1860,750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_42"/></comp>
+    <comp lib="0" loc="(1830,760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_47"/></comp>
+    <comp lib="0" loc="(1860,750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_48"/></comp>
+    <comp lib="1" loc="(2120,750)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_42"/></comp>
+    <comp lib="0" loc="(2090,760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_47"/></comp>
+    <comp lib="0" loc="(2120,750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_49"/></comp>
+    <comp lib="1" loc="(300,850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_41"/></comp>
+    <comp lib="0" loc="(270,860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_49"/></comp>
+    <comp lib="0" loc="(300,850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_50"/></comp>
+    <comp lib="1" loc="(560,850)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_41"/></comp>
+    <comp lib="0" loc="(530,860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_49"/></comp>
+    <comp lib="0" loc="(560,850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_51"/></comp>
+    <comp lib="1" loc="(820,850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_40"/></comp>
+    <comp lib="0" loc="(790,860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_51"/></comp>
+    <comp lib="0" loc="(820,850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_52"/></comp>
+    <comp lib="1" loc="(1080,850)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_40"/></comp>
+    <comp lib="0" loc="(1050,860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_51"/></comp>
+    <comp lib="0" loc="(1080,850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_53"/></comp>
+    <comp lib="1" loc="(1340,850)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_4"/></comp>
+    <comp lib="0" loc="(1310,860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_15"/></comp>
+    <comp lib="0" loc="(1340,850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_54"/></comp>
+    <comp lib="1" loc="(1600,850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_53"/></comp>
+    <comp lib="0" loc="(1570,860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_54"/></comp>
+    <comp lib="0" loc="(1600,850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_55"/></comp>
+    <comp lib="1" loc="(1860,850)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_53"/></comp>
+    <comp lib="0" loc="(1830,860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_54"/></comp>
+    <comp lib="0" loc="(1860,850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_56"/></comp>
+    <comp lib="1" loc="(2120,850)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_3"/></comp>
+    <comp lib="0" loc="(2090,860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_16"/></comp>
+    <comp lib="0" loc="(2120,850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_57"/></comp>
+    <comp lib="1" loc="(300,950)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_56"/></comp>
+    <comp lib="0" loc="(270,960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_57"/></comp>
+    <comp lib="0" loc="(300,950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_58"/></comp>
+    <comp lib="1" loc="(560,950)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_56"/></comp>
+    <comp lib="0" loc="(530,960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_57"/></comp>
+    <comp lib="0" loc="(560,950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_59"/></comp>
+    <comp lib="1" loc="(820,950)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_39"/></comp>
+    <comp lib="0" loc="(790,960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_59"/></comp>
+    <comp lib="0" loc="(820,950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_60"/></comp>
+    <comp lib="1" loc="(1080,950)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_4"/></comp>
+    <comp lib="0" loc="(1050,960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_16"/></comp>
+    <comp lib="0" loc="(1080,950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_61"/></comp>
+    <comp lib="1" loc="(1340,950)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_55"/></comp>
+    <comp lib="0" loc="(1310,960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_61"/></comp>
+    <comp lib="0" loc="(1340,950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_62"/></comp>
+    <comp lib="1" loc="(1600,950)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_37"/></comp>
+    <comp lib="0" loc="(1570,960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_55"/></comp>
+    <comp lib="0" loc="(1600,950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_63"/></comp>
+    <comp lib="1" loc="(1860,950)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_62"/></comp>
+    <comp lib="0" loc="(1830,960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_63"/></comp>
+    <comp lib="0" loc="(1860,950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_64"/></comp>
+    <comp lib="1" loc="(2120,950)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_5"/></comp>
+    <comp lib="0" loc="(2090,960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_15"/></comp>
+    <comp lib="0" loc="(2120,950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_65"/></comp>
+    <comp lib="1" loc="(300,1050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_52"/></comp>
+    <comp lib="0" loc="(270,1060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_65"/></comp>
+    <comp lib="0" loc="(300,1050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_66"/></comp>
+    <comp lib="1" loc="(560,1050)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_38"/></comp>
+    <comp lib="0" loc="(530,1060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_52"/></comp>
+    <comp lib="0" loc="(560,1050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_67"/></comp>
+    <comp lib="1" loc="(820,1050)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_66"/></comp>
+    <comp lib="0" loc="(790,1060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_67"/></comp>
+    <comp lib="0" loc="(820,1050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_68"/></comp>
+    <comp lib="1" loc="(1080,1050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_14"/></comp>
+    <comp lib="0" loc="(1050,1060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_6"/></comp>
+    <comp lib="0" loc="(1080,1050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_69"/></comp>
+    <comp lib="1" loc="(1340,1050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_50"/></comp>
+    <comp lib="0" loc="(1310,1060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_69"/></comp>
+    <comp lib="0" loc="(1340,1050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_70"/></comp>
+    <comp lib="1" loc="(1600,1050)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_34"/></comp>
+    <comp lib="0" loc="(1570,1060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_50"/></comp>
+    <comp lib="0" loc="(1600,1050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_71"/></comp>
+    <comp lib="1" loc="(1860,1050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_70"/></comp>
+    <comp lib="0" loc="(1830,1060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_71"/></comp>
+    <comp lib="0" loc="(1860,1050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_72"/></comp>
+    <comp lib="1" loc="(2120,1050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_7"/></comp>
+    <comp lib="0" loc="(2090,1060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_13"/></comp>
+    <comp lib="0" loc="(2120,1050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_73"/></comp>
+    <comp lib="1" loc="(300,1150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_48"/></comp>
+    <comp lib="0" loc="(270,1160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_73"/></comp>
+    <comp lib="0" loc="(300,1150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_74"/></comp>
+    <comp lib="1" loc="(560,1150)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_35"/></comp>
+    <comp lib="0" loc="(530,1160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_48"/></comp>
+    <comp lib="0" loc="(560,1150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_75"/></comp>
+    <comp lib="1" loc="(820,1150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_74"/></comp>
+    <comp lib="0" loc="(790,1160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_75"/></comp>
+    <comp lib="0" loc="(820,1150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_76"/></comp>
+    <comp lib="1" loc="(1080,1150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_12"/></comp>
+    <comp lib="0" loc="(1050,1160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_8"/></comp>
+    <comp lib="0" loc="(1080,1150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_77"/></comp>
+    <comp lib="1" loc="(1340,1150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_45"/></comp>
+    <comp lib="0" loc="(1310,1160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_46"/></comp>
+    <comp lib="0" loc="(1340,1150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_78"/></comp>
+    <comp lib="1" loc="(1600,1150)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_77"/></comp>
+    <comp lib="0" loc="(1570,1160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_78"/></comp>
+    <comp lib="0" loc="(1600,1150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_79"/></comp>
+    <comp lib="1" loc="(1860,1150)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_76"/></comp>
+    <comp lib="0" loc="(1830,1160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_79"/></comp>
+    <comp lib="0" loc="(1860,1150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_80"/></comp>
+    <comp lib="1" loc="(2120,1150)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_72"/></comp>
+    <comp lib="0" loc="(2090,1160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_80"/></comp>
+    <comp lib="0" loc="(2120,1150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_81"/></comp>
+    <comp lib="1" loc="(300,1250)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_68"/></comp>
+    <comp lib="0" loc="(270,1260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_81"/></comp>
+    <comp lib="0" loc="(300,1250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_82"/></comp>
+    <comp lib="1" loc="(560,1250)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_64"/></comp>
+    <comp lib="0" loc="(530,1260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_82"/></comp>
+    <comp lib="0" loc="(560,1250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_83"/></comp>
+    <comp lib="1" loc="(820,1250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_3"/></comp>
+    <comp lib="0" loc="(790,1260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_17"/></comp>
+    <comp lib="0" loc="(820,1250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_84"/></comp>
+    <comp lib="1" loc="(1080,1250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_58"/></comp>
+    <comp lib="0" loc="(1050,1260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_84"/></comp>
+    <comp lib="0" loc="(1080,1250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_85"/></comp>
+    <comp lib="1" loc="(1340,1250)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_36"/></comp>
+    <comp lib="0" loc="(1310,1260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_58"/></comp>
+    <comp lib="0" loc="(1340,1250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_86"/></comp>
+    <comp lib="1" loc="(1600,1250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_85"/></comp>
+    <comp lib="0" loc="(1570,1260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_86"/></comp>
+    <comp lib="0" loc="(1600,1250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_87"/></comp>
+    <comp lib="1" loc="(1860,1250)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_83"/></comp>
+    <comp lib="0" loc="(1830,1260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_87"/></comp>
+    <comp lib="0" loc="(1860,1250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_88"/></comp>
+    <comp lib="1" loc="(2120,1250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_60"/></comp>
+    <comp lib="0" loc="(2090,1260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_88"/></comp>
+    <comp lib="0" loc="(2120,1250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_89"/></comp>
+    <comp lib="1" loc="(300,1350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_83"/></comp>
+    <comp lib="0" loc="(270,1360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_85"/></comp>
+    <comp lib="0" loc="(300,1350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_90"/></comp>
+    <comp lib="1" loc="(560,1350)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_86"/></comp>
+    <comp lib="0" loc="(530,1360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_90"/></comp>
+    <comp lib="0" loc="(560,1350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_91"/></comp>
+    <comp lib="1" loc="(820,1350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_89"/></comp>
+    <comp lib="0" loc="(790,1360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_91"/></comp>
+    <comp lib="0" loc="(820,1350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_92"/></comp>
+    <comp lib="1" loc="(1080,1350)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_4"/></comp>
+    <comp lib="0" loc="(1050,1360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_17"/></comp>
+    <comp lib="0" loc="(1080,1350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_93"/></comp>
+    <comp lib="1" loc="(1340,1350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_62"/></comp>
+    <comp lib="0" loc="(1310,1360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_82"/></comp>
+    <comp lib="0" loc="(1340,1350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_94"/></comp>
+    <comp lib="1" loc="(1600,1350)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_63"/></comp>
+    <comp lib="0" loc="(1570,1360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_94"/></comp>
+    <comp lib="0" loc="(1600,1350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_95"/></comp>
+    <comp lib="1" loc="(1800,1380)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(1780,1380)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_95"/></comp>
+    <comp lib="0" loc="(1800,1380)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_62"/></comp>
+    <comp lib="1" loc="(1860,1350)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_93"/></comp>
+    <comp lib="0" loc="(1830,1360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_62"/></comp>
+    <comp lib="0" loc="(1860,1350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_96"/></comp>
+    <comp lib="1" loc="(2060,1380)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(2040,1380)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_93"/></comp>
+    <comp lib="0" loc="(2060,1380)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_63"/></comp>
+    <comp lib="1" loc="(2120,1350)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_95"/></comp>
+    <comp lib="0" loc="(2090,1360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_63"/></comp>
+    <comp lib="0" loc="(2120,1350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_97"/></comp>
+    <comp lib="1" loc="(300,1450)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_93"/></comp>
+    <comp lib="0" loc="(270,1460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_95"/></comp>
+    <comp lib="0" loc="(300,1450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_98"/></comp>
+    <comp lib="1" loc="(560,1450)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_5"/></comp>
+    <comp lib="0" loc="(530,1460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_16"/></comp>
+    <comp lib="0" loc="(560,1450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_99"/></comp>
+    <comp lib="1" loc="(820,1450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_67"/></comp>
+    <comp lib="0" loc="(790,1460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_81"/></comp>
+    <comp lib="0" loc="(820,1450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_100"/></comp>
+    <comp lib="1" loc="(1080,1450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_66"/></comp>
+    <comp lib="0" loc="(1050,1460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_100"/></comp>
+    <comp lib="0" loc="(1080,1450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_101"/></comp>
+    <comp lib="1" loc="(1280,1480)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(1260,1480)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_101"/></comp>
+    <comp lib="0" loc="(1280,1480)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_68"/></comp>
+    <comp lib="1" loc="(1340,1450)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_99"/></comp>
+    <comp lib="0" loc="(1310,1460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_68"/></comp>
+    <comp lib="0" loc="(1340,1450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_102"/></comp>
+    <comp lib="1" loc="(1540,1480)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(1520,1480)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_99"/></comp>
+    <comp lib="0" loc="(1540,1480)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_69"/></comp>
+    <comp lib="1" loc="(1600,1450)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_101"/></comp>
+    <comp lib="0" loc="(1570,1460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_69"/></comp>
+    <comp lib="0" loc="(1600,1450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_103"/></comp>
+    <comp lib="1" loc="(1860,1450)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_99"/></comp>
+    <comp lib="0" loc="(1830,1460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_101"/></comp>
+    <comp lib="0" loc="(1860,1450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_104"/></comp>
+    <comp lib="1" loc="(2120,1450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_6"/></comp>
+    <comp lib="0" loc="(2090,1460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_15"/></comp>
+    <comp lib="0" loc="(2120,1450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_105"/></comp>
+    <comp lib="1" loc="(240,1580)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(220,1580)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_80"/></comp>
+    <comp lib="0" loc="(240,1580)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_72"/></comp>
+    <comp lib="1" loc="(300,1550)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_70"/></comp>
+    <comp lib="0" loc="(270,1560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_72"/></comp>
+    <comp lib="0" loc="(300,1550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_106"/></comp>
+    <comp lib="1" loc="(500,1580)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(480,1580)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_106"/></comp>
+    <comp lib="0" loc="(500,1580)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_73"/></comp>
+    <comp lib="1" loc="(560,1550)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_71"/></comp>
+    <comp lib="0" loc="(530,1560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_73"/></comp>
+    <comp lib="0" loc="(560,1550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_107"/></comp>
+    <comp lib="1" loc="(820,1550)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_105"/></comp>
+    <comp lib="0" loc="(790,1560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_107"/></comp>
+    <comp lib="0" loc="(820,1550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_108"/></comp>
+    <comp lib="1" loc="(1080,1550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_105"/></comp>
+    <comp lib="0" loc="(1050,1560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_107"/></comp>
+    <comp lib="0" loc="(1080,1550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_109"/></comp>
+    <comp lib="1" loc="(1340,1550)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_105"/></comp>
+    <comp lib="0" loc="(1310,1560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_107"/></comp>
+    <comp lib="0" loc="(1340,1550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_110"/></comp>
+    <comp lib="1" loc="(1600,1550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_14"/></comp>
+    <comp lib="0" loc="(1570,1560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_7"/></comp>
+    <comp lib="0" loc="(1600,1550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_111"/></comp>
+    <comp lib="1" loc="(1800,1580)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(1780,1580)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_79"/></comp>
+    <comp lib="0" loc="(1800,1580)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_78"/></comp>
+    <comp lib="1" loc="(1860,1550)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_74"/></comp>
+    <comp lib="0" loc="(1830,1560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_78"/></comp>
+    <comp lib="0" loc="(1860,1550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_112"/></comp>
+    <comp lib="1" loc="(2060,1580)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(2040,1580)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_112"/></comp>
+    <comp lib="0" loc="(2060,1580)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_79"/></comp>
+    <comp lib="1" loc="(2120,1550)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_75"/></comp>
+    <comp lib="0" loc="(2090,1560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_79"/></comp>
+    <comp lib="0" loc="(2120,1550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_113"/></comp>
+    <comp lib="1" loc="(300,1650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_111"/></comp>
+    <comp lib="0" loc="(270,1660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_113"/></comp>
+    <comp lib="0" loc="(300,1650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_114"/></comp>
+    <comp lib="1" loc="(560,1650)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_111"/></comp>
+    <comp lib="0" loc="(530,1660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_113"/></comp>
+    <comp lib="0" loc="(560,1650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_115"/></comp>
+    <comp lib="1" loc="(820,1650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_114"/></comp>
+    <comp lib="0" loc="(790,1660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_115"/></comp>
+    <comp lib="0" loc="(820,1650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_116"/></comp>
+    <comp lib="1" loc="(1080,1650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_9"/></comp>
+    <comp lib="0" loc="(1050,1660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_12"/></comp>
+    <comp lib="0" loc="(1080,1650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_117"/></comp>
+    <comp lib="1" loc="(1340,1650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_46"/></comp>
+    <comp lib="0" loc="(1310,1660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_77"/></comp>
+    <comp lib="0" loc="(1340,1650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_118"/></comp>
+    <comp lib="1" loc="(1600,1650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_45"/></comp>
+    <comp lib="0" loc="(1570,1660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_118"/></comp>
+    <comp lib="0" loc="(1600,1650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_119"/></comp>
+    <comp lib="1" loc="(1860,1650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_8"/></comp>
+    <comp lib="0" loc="(1830,1660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_13"/></comp>
+    <comp lib="0" loc="(1860,1650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_120"/></comp>
+    <comp lib="1" loc="(2120,1650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_119"/></comp>
+    <comp lib="0" loc="(2090,1660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_120"/></comp>
+    <comp lib="0" loc="(2120,1650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_121"/></comp>
+    <comp lib="1" loc="(300,1750)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_119"/></comp>
+    <comp lib="0" loc="(270,1760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_120"/></comp>
+    <comp lib="0" loc="(300,1750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_122"/></comp>
+    <comp lib="1" loc="(560,1750)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_121"/></comp>
+    <comp lib="0" loc="(530,1760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_122"/></comp>
+    <comp lib="0" loc="(560,1750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_123"/></comp>
+    <comp lib="1" loc="(820,1750)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_117"/></comp>
+    <comp lib="0" loc="(790,1760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_123"/></comp>
+    <comp lib="0" loc="(820,1750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_124"/></comp>
+    <comp lib="1" loc="(1080,1750)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_116"/></comp>
+    <comp lib="0" loc="(1050,1760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_124"/></comp>
+    <comp lib="0" loc="(1080,1750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_125"/></comp>
+    <comp lib="1" loc="(1340,1750)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_110"/></comp>
+    <comp lib="0" loc="(1310,1760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_125"/></comp>
+    <comp lib="0" loc="(1340,1750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_126"/></comp>
+    <comp lib="1" loc="(1600,1750)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_104"/></comp>
+    <comp lib="0" loc="(1570,1760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_126"/></comp>
+    <comp lib="0" loc="(1600,1750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_127"/></comp>
+    <comp lib="1" loc="(1860,1750)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_98"/></comp>
+    <comp lib="0" loc="(1830,1760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_127"/></comp>
+    <comp lib="0" loc="(1860,1750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_128"/></comp>
+    <comp lib="1" loc="(2120,1750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_92"/></comp>
+    <comp lib="0" loc="(2090,1760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_128"/></comp>
+    <comp lib="0" loc="(2120,1750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_129"/></comp>
+    <comp lib="1" loc="(300,1850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_97"/></comp>
+    <comp lib="0" loc="(270,1860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_127"/></comp>
+    <comp lib="0" loc="(300,1850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_130"/></comp>
+    <comp lib="1" loc="(560,1850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_96"/></comp>
+    <comp lib="0" loc="(530,1860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_130"/></comp>
+    <comp lib="0" loc="(560,1850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_131"/></comp>
+    <comp lib="1" loc="(820,1850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_129"/></comp>
+    <comp lib="0" loc="(790,1860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_131"/></comp>
+    <comp lib="0" loc="(820,1850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_132"/></comp>
+    <comp lib="1" loc="(1080,1850)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_129"/></comp>
+    <comp lib="0" loc="(1050,1860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_131"/></comp>
+    <comp lib="0" loc="(1080,1850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_133"/></comp>
+    <comp lib="1" loc="(1340,1850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_132"/></comp>
+    <comp lib="0" loc="(1310,1860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_133"/></comp>
+    <comp lib="0" loc="(1340,1850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_134"/></comp>
+    <comp lib="1" loc="(1600,1850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_5"/></comp>
+    <comp lib="0" loc="(1570,1860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_17"/></comp>
+    <comp lib="0" loc="(1600,1850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_135"/></comp>
+    <comp lib="1" loc="(1860,1850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_102"/></comp>
+    <comp lib="0" loc="(1830,1860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_126"/></comp>
+    <comp lib="0" loc="(1860,1850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_136"/></comp>
+    <comp lib="1" loc="(2120,1850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_103"/></comp>
+    <comp lib="0" loc="(2090,1860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_136"/></comp>
+    <comp lib="0" loc="(2120,1850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_137"/></comp>
+    <comp lib="1" loc="(240,1980)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(220,1980)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_137"/></comp>
+    <comp lib="0" loc="(240,1980)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_104"/></comp>
+    <comp lib="1" loc="(300,1950)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,1940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_135"/></comp>
+    <comp lib="0" loc="(270,1960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_104"/></comp>
+    <comp lib="0" loc="(300,1950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_138"/></comp>
+    <comp lib="1" loc="(500,1980)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(480,1980)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_137"/></comp>
+    <comp lib="0" loc="(500,1980)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_105"/></comp>
+    <comp lib="1" loc="(560,1950)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,1940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_135"/></comp>
+    <comp lib="0" loc="(530,1960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_105"/></comp>
+    <comp lib="0" loc="(560,1950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_139"/></comp>
+    <comp lib="1" loc="(820,1950)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,1940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_135"/></comp>
+    <comp lib="0" loc="(790,1960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_137"/></comp>
+    <comp lib="0" loc="(820,1950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_140"/></comp>
+    <comp lib="1" loc="(1080,1950)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,1940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_6"/></comp>
+    <comp lib="0" loc="(1050,1960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_16"/></comp>
+    <comp lib="0" loc="(1080,1950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_141"/></comp>
+    <comp lib="1" loc="(1340,1950)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,1940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_108"/></comp>
+    <comp lib="0" loc="(1310,1960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_125"/></comp>
+    <comp lib="0" loc="(1340,1950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_142"/></comp>
+    <comp lib="1" loc="(1600,1950)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,1940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_109"/></comp>
+    <comp lib="0" loc="(1570,1960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_142"/></comp>
+    <comp lib="0" loc="(1600,1950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_143"/></comp>
+    <comp lib="1" loc="(1860,1950)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,1940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_141"/></comp>
+    <comp lib="0" loc="(1830,1960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_143"/></comp>
+    <comp lib="0" loc="(1860,1950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_144"/></comp>
+    <comp lib="1" loc="(2120,1950)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,1940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_141"/></comp>
+    <comp lib="0" loc="(2090,1960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_143"/></comp>
+    <comp lib="0" loc="(2120,1950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_145"/></comp>
+    <comp lib="1" loc="(300,2050)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_141"/></comp>
+    <comp lib="0" loc="(270,2060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_143"/></comp>
+    <comp lib="0" loc="(300,2050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_146"/></comp>
+    <comp lib="1" loc="(560,2050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_7"/></comp>
+    <comp lib="0" loc="(530,2060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_15"/></comp>
+    <comp lib="0" loc="(560,2050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_147"/></comp>
+    <comp lib="1" loc="(820,2050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_115"/></comp>
+    <comp lib="0" loc="(790,2060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_124"/></comp>
+    <comp lib="0" loc="(820,2050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_148"/></comp>
+    <comp lib="1" loc="(1080,2050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_114"/></comp>
+    <comp lib="0" loc="(1050,2060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_148"/></comp>
+    <comp lib="0" loc="(1080,2050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_149"/></comp>
+    <comp lib="1" loc="(1340,2050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_147"/></comp>
+    <comp lib="0" loc="(1310,2060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_149"/></comp>
+    <comp lib="0" loc="(1340,2050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_150"/></comp>
+    <comp lib="1" loc="(1600,2050)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_147"/></comp>
+    <comp lib="0" loc="(1570,2060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_149"/></comp>
+    <comp lib="0" loc="(1600,2050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_151"/></comp>
+    <comp lib="1" loc="(1860,2050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_150"/></comp>
+    <comp lib="0" loc="(1830,2060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_151"/></comp>
+    <comp lib="0" loc="(1860,2050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_152"/></comp>
+    <comp lib="1" loc="(2120,2050)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_9"/></comp>
+    <comp lib="0" loc="(2090,2060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_13"/></comp>
+    <comp lib="0" loc="(2120,2050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_153"/></comp>
+    <comp lib="1" loc="(300,2150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_14"/></comp>
+    <comp lib="0" loc="(270,2160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_8"/></comp>
+    <comp lib="0" loc="(300,2150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_154"/></comp>
+    <comp lib="1" loc="(560,2150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_117"/></comp>
+    <comp lib="0" loc="(530,2160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_121"/></comp>
+    <comp lib="0" loc="(560,2150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_155"/></comp>
+    <comp lib="1" loc="(820,2150)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_122"/></comp>
+    <comp lib="0" loc="(790,2160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_155"/></comp>
+    <comp lib="0" loc="(820,2150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_156"/></comp>
+    <comp lib="1" loc="(1080,2150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_154"/></comp>
+    <comp lib="0" loc="(1050,2160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_156"/></comp>
+    <comp lib="0" loc="(1080,2150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_157"/></comp>
+    <comp lib="1" loc="(1340,2150)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_154"/></comp>
+    <comp lib="0" loc="(1310,2160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_156"/></comp>
+    <comp lib="0" loc="(1340,2150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_158"/></comp>
+    <comp lib="1" loc="(1600,2150)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_157"/></comp>
+    <comp lib="0" loc="(1570,2160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_158"/></comp>
+    <comp lib="0" loc="(1600,2150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_159"/></comp>
+    <comp lib="1" loc="(1860,2150)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_153"/></comp>
+    <comp lib="0" loc="(1830,2160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_159"/></comp>
+    <comp lib="0" loc="(1860,2150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_160"/></comp>
+    <comp lib="1" loc="(2120,2150)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_152"/></comp>
+    <comp lib="0" loc="(2090,2160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_160"/></comp>
+    <comp lib="0" loc="(2120,2150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_161"/></comp>
+    <comp lib="1" loc="(300,2250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_145"/></comp>
+    <comp lib="0" loc="(270,2260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_161"/></comp>
+    <comp lib="0" loc="(300,2250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_162"/></comp>
+    <comp lib="1" loc="(560,2250)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_146"/></comp>
+    <comp lib="0" loc="(530,2260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_161"/></comp>
+    <comp lib="0" loc="(560,2250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_163"/></comp>
+    <comp lib="1" loc="(820,2250)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_140"/></comp>
+    <comp lib="0" loc="(790,2260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_163"/></comp>
+    <comp lib="0" loc="(820,2250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_164"/></comp>
+    <comp lib="1" loc="(1080,2250)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_134"/></comp>
+    <comp lib="0" loc="(1050,2260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_164"/></comp>
+    <comp lib="0" loc="(1080,2250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_28"/></comp>
+    <comp lib="1" loc="(1340,2250)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_60"/></comp>
+    <comp lib="0" loc="(1310,2260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_88"/></comp>
+    <comp lib="0" loc="(1340,2250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_26"/></comp>
+    <comp lib="1" loc="(1600,2250)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_7"/></comp>
+    <comp lib="0" loc="(1570,2260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_17"/></comp>
+    <comp lib="0" loc="(1600,2250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_165"/></comp>
+    <comp lib="1" loc="(1860,2250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_7"/></comp>
+    <comp lib="0" loc="(1830,2260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_16"/></comp>
+    <comp lib="0" loc="(1860,2250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_166"/></comp>
+    <comp lib="1" loc="(2120,2250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_151"/></comp>
+    <comp lib="0" loc="(2090,2260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_160"/></comp>
+    <comp lib="0" loc="(2120,2250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_167"/></comp>
+    <comp lib="1" loc="(300,2350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_150"/></comp>
+    <comp lib="0" loc="(270,2360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_167"/></comp>
+    <comp lib="0" loc="(300,2350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_168"/></comp>
+    <comp lib="1" loc="(560,2350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_166"/></comp>
+    <comp lib="0" loc="(530,2360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_168"/></comp>
+    <comp lib="0" loc="(560,2350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_169"/></comp>
+    <comp lib="1" loc="(820,2350)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_166"/></comp>
+    <comp lib="0" loc="(790,2360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_168"/></comp>
+    <comp lib="0" loc="(820,2350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_170"/></comp>
+    <comp lib="1" loc="(1080,2350)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_9"/></comp>
+    <comp lib="0" loc="(1050,2360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_14"/></comp>
+    <comp lib="0" loc="(1080,2350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_171"/></comp>
+    <comp lib="1" loc="(1340,2350)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_8"/></comp>
+    <comp lib="0" loc="(1310,2360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_15"/></comp>
+    <comp lib="0" loc="(1340,2350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_172"/></comp>
+    <comp lib="1" loc="(1600,2350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_153"/></comp>
+    <comp lib="0" loc="(1570,2360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_157"/></comp>
+    <comp lib="0" loc="(1600,2350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_173"/></comp>
+    <comp lib="1" loc="(1860,2350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_158"/></comp>
+    <comp lib="0" loc="(1830,2360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_173"/></comp>
+    <comp lib="0" loc="(1860,2350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_174"/></comp>
+    <comp lib="1" loc="(2120,2350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_172"/></comp>
+    <comp lib="0" loc="(2090,2360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_174"/></comp>
+    <comp lib="0" loc="(2120,2350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_175"/></comp>
+    <comp lib="1" loc="(300,2450)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_172"/></comp>
+    <comp lib="0" loc="(270,2460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_174"/></comp>
+    <comp lib="0" loc="(300,2450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_176"/></comp>
+    <comp lib="1" loc="(560,2450)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_175"/></comp>
+    <comp lib="0" loc="(530,2460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_176"/></comp>
+    <comp lib="0" loc="(560,2450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_177"/></comp>
+    <comp lib="1" loc="(820,2450)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_171"/></comp>
+    <comp lib="0" loc="(790,2460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_177"/></comp>
+    <comp lib="0" loc="(820,2450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_178"/></comp>
+    <comp lib="1" loc="(1080,2450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_170"/></comp>
+    <comp lib="0" loc="(1050,2460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_178"/></comp>
+    <comp lib="0" loc="(1080,2450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_179"/></comp>
+    <comp lib="1" loc="(1340,2450)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_169"/></comp>
+    <comp lib="0" loc="(1310,2460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_179"/></comp>
+    <comp lib="0" loc="(1340,2450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_180"/></comp>
+    <comp lib="1" loc="(1600,2450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_165"/></comp>
+    <comp lib="0" loc="(1570,2460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_180"/></comp>
+    <comp lib="0" loc="(1600,2450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_181"/></comp>
+    <comp lib="1" loc="(1860,2450)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_165"/></comp>
+    <comp lib="0" loc="(1830,2460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_180"/></comp>
+    <comp lib="0" loc="(1860,2450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_182"/></comp>
+    <comp lib="1" loc="(2120,2450)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_9"/></comp>
+    <comp lib="0" loc="(2090,2460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_15"/></comp>
+    <comp lib="0" loc="(2120,2450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_183"/></comp>
+    <comp lib="1" loc="(300,2550)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_8"/></comp>
+    <comp lib="0" loc="(270,2560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_16"/></comp>
+    <comp lib="0" loc="(300,2550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_184"/></comp>
+    <comp lib="1" loc="(560,2550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_171"/></comp>
+    <comp lib="0" loc="(530,2560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_176"/></comp>
+    <comp lib="0" loc="(560,2550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_185"/></comp>
+    <comp lib="1" loc="(820,2550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_175"/></comp>
+    <comp lib="0" loc="(790,2560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_185"/></comp>
+    <comp lib="0" loc="(820,2550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_186"/></comp>
+    <comp lib="1" loc="(1080,2550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_184"/></comp>
+    <comp lib="0" loc="(1050,2560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_186"/></comp>
+    <comp lib="0" loc="(1080,2550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_187"/></comp>
+    <comp lib="1" loc="(1340,2550)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_184"/></comp>
+    <comp lib="0" loc="(1310,2560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_186"/></comp>
+    <comp lib="0" loc="(1340,2550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_188"/></comp>
+    <comp lib="1" loc="(1600,2550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_187"/></comp>
+    <comp lib="0" loc="(1570,2560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_188"/></comp>
+    <comp lib="0" loc="(1600,2550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_189"/></comp>
+    <comp lib="1" loc="(1860,2550)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_183"/></comp>
+    <comp lib="0" loc="(1830,2560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_189"/></comp>
+    <comp lib="0" loc="(1860,2550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_190"/></comp>
+    <comp lib="1" loc="(2120,2550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_182"/></comp>
+    <comp lib="0" loc="(2090,2560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_190"/></comp>
+    <comp lib="0" loc="(2120,2550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_191"/></comp>
+    <comp lib="1" loc="(300,2650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_181"/></comp>
+    <comp lib="0" loc="(270,2660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_191"/></comp>
+    <comp lib="0" loc="(300,2650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_192"/></comp>
+    <comp lib="1" loc="(560,2650)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_138"/></comp>
+    <comp lib="0" loc="(530,2660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_163"/></comp>
+    <comp lib="0" loc="(560,2650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_193"/></comp>
+    <comp lib="1" loc="(820,2650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_139"/></comp>
+    <comp lib="0" loc="(790,2660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_193"/></comp>
+    <comp lib="0" loc="(820,2650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_194"/></comp>
+    <comp lib="1" loc="(1080,2650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_132"/></comp>
+    <comp lib="0" loc="(1050,2660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_164"/></comp>
+    <comp lib="0" loc="(1080,2650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_195"/></comp>
+    <comp lib="1" loc="(1340,2650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_133"/></comp>
+    <comp lib="0" loc="(1310,2660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_195"/></comp>
+    <comp lib="0" loc="(1340,2650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_196"/></comp>
+    <comp lib="1" loc="(1600,2650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_194"/></comp>
+    <comp lib="0" loc="(1570,2660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_196"/></comp>
+    <comp lib="0" loc="(1600,2650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_197"/></comp>
+    <comp lib="1" loc="(1860,2650)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_194"/></comp>
+    <comp lib="0" loc="(1830,2660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_196"/></comp>
+    <comp lib="0" loc="(1860,2650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_198"/></comp>
+    <comp lib="1" loc="(2120,2650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_6"/></comp>
+    <comp lib="0" loc="(2090,2660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_17"/></comp>
+    <comp lib="0" loc="(2120,2650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_199"/></comp>
+    <comp lib="1" loc="(300,2750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_144"/></comp>
+    <comp lib="0" loc="(270,2760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_162"/></comp>
+    <comp lib="0" loc="(300,2750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_200"/></comp>
+    <comp lib="1" loc="(560,2750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_199"/></comp>
+    <comp lib="0" loc="(530,2760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_200"/></comp>
+    <comp lib="0" loc="(560,2750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_201"/></comp>
+    <comp lib="1" loc="(820,2750)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_199"/></comp>
+    <comp lib="0" loc="(790,2760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_200"/></comp>
+    <comp lib="0" loc="(820,2750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_202"/></comp>
+    <comp lib="1" loc="(1080,2750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_201"/></comp>
+    <comp lib="0" loc="(1050,2760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_202"/></comp>
+    <comp lib="0" loc="(1080,2750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_203"/></comp>
+    <comp lib="1" loc="(1340,2750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_169"/></comp>
+    <comp lib="0" loc="(1310,2760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_170"/></comp>
+    <comp lib="0" loc="(1340,2750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_204"/></comp>
+    <comp lib="1" loc="(1600,2750)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_178"/></comp>
+    <comp lib="0" loc="(1570,2760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_204"/></comp>
+    <comp lib="0" loc="(1600,2750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_205"/></comp>
+    <comp lib="1" loc="(1860,2750)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_203"/></comp>
+    <comp lib="0" loc="(1830,2760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_205"/></comp>
+    <comp lib="0" loc="(1860,2750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_206"/></comp>
+    <comp lib="1" loc="(2120,2750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_198"/></comp>
+    <comp lib="0" loc="(2090,2760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_206"/></comp>
+    <comp lib="0" loc="(2120,2750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_207"/></comp>
+    <comp lib="1" loc="(300,2850)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_197"/></comp>
+    <comp lib="0" loc="(270,2860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_207"/></comp>
+    <comp lib="0" loc="(300,2850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_208"/></comp>
+    <comp lib="1" loc="(560,2850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_202"/></comp>
+    <comp lib="0" loc="(530,2860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_205"/></comp>
+    <comp lib="0" loc="(560,2850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_209"/></comp>
+    <comp lib="1" loc="(820,2850)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_201"/></comp>
+    <comp lib="0" loc="(790,2860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_209"/></comp>
+    <comp lib="0" loc="(820,2850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_210"/></comp>
+    <comp lib="1" loc="(1080,2850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_208"/></comp>
+    <comp lib="0" loc="(1050,2860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_210"/></comp>
+    <comp lib="0" loc="(1080,2850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_211"/></comp>
+    <comp lib="1" loc="(1340,2850)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_208"/></comp>
+    <comp lib="0" loc="(1310,2860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_210"/></comp>
+    <comp lib="0" loc="(1340,2850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_212"/></comp>
+    <comp lib="1" loc="(1600,2850)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_181"/></comp>
+    <comp lib="0" loc="(1570,2860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_182"/></comp>
+    <comp lib="0" loc="(1600,2850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_213"/></comp>
+    <comp lib="1" loc="(1860,2850)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_190"/></comp>
+    <comp lib="0" loc="(1830,2860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_213"/></comp>
+    <comp lib="0" loc="(1860,2850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_214"/></comp>
+    <comp lib="1" loc="(2120,2850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_212"/></comp>
+    <comp lib="0" loc="(2090,2860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_214"/></comp>
+    <comp lib="0" loc="(2120,2850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_215"/></comp>
+    <comp lib="1" loc="(300,2950)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,2940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_211"/></comp>
+    <comp lib="0" loc="(270,2960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_215"/></comp>
+    <comp lib="0" loc="(300,2950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_216"/></comp>
+    <comp lib="1" loc="(560,2950)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,2940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_192"/></comp>
+    <comp lib="0" loc="(530,2960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_216"/></comp>
+    <comp lib="0" loc="(560,2950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_217"/></comp>
+    <comp lib="1" loc="(820,2950)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,2940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_192"/></comp>
+    <comp lib="0" loc="(790,2960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_216"/></comp>
+    <comp lib="0" loc="(820,2950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_218"/></comp>
+    <comp lib="1" loc="(1080,2950)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,2940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_217"/></comp>
+    <comp lib="0" loc="(1050,2960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_218"/></comp>
+    <comp lib="0" loc="(1080,2950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_219"/></comp>
+    <comp lib="1" loc="(1340,2950)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,2940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_9"/></comp>
+    <comp lib="0" loc="(1310,2960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_16"/></comp>
+    <comp lib="0" loc="(1340,2950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_220"/></comp>
+    <comp lib="1" loc="(1600,2950)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,2940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_8"/></comp>
+    <comp lib="0" loc="(1570,2960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_17"/></comp>
+    <comp lib="0" loc="(1600,2950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_221"/></comp>
+    <comp lib="1" loc="(1860,2950)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,2940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_183"/></comp>
+    <comp lib="0" loc="(1830,2960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_188"/></comp>
+    <comp lib="0" loc="(1860,2950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_222"/></comp>
+    <comp lib="1" loc="(2120,2950)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,2940)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_187"/></comp>
+    <comp lib="0" loc="(2090,2960)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_222"/></comp>
+    <comp lib="0" loc="(2120,2950)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_223"/></comp>
+    <comp lib="1" loc="(240,3080)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(220,3080)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_223"/></comp>
+    <comp lib="0" loc="(240,3080)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_192"/></comp>
+    <comp lib="1" loc="(300,3050)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,3040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_221"/></comp>
+    <comp lib="0" loc="(270,3060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_192"/></comp>
+    <comp lib="0" loc="(300,3050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_224"/></comp>
+    <comp lib="1" loc="(500,3080)" name="NOT Gate"><a name="size" val="20"/></comp>
+    <comp lib="0" loc="(480,3080)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_221"/></comp>
+    <comp lib="0" loc="(500,3080)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="inv_gate_193"/></comp>
+    <comp lib="1" loc="(560,3050)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,3040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_223"/></comp>
+    <comp lib="0" loc="(530,3060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="inv_gate_193"/></comp>
+    <comp lib="0" loc="(560,3050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_225"/></comp>
+    <comp lib="1" loc="(820,3050)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,3040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_224"/></comp>
+    <comp lib="0" loc="(790,3060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_225"/></comp>
+    <comp lib="0" loc="(820,3050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_226"/></comp>
+    <comp lib="1" loc="(1080,3050)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,3040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_220"/></comp>
+    <comp lib="0" loc="(1050,3060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_226"/></comp>
+    <comp lib="0" loc="(1080,3050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_227"/></comp>
+    <comp lib="1" loc="(1340,3050)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,3040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_219"/></comp>
+    <comp lib="0" loc="(1310,3060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_227"/></comp>
+    <comp lib="0" loc="(1340,3050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_31"/></comp>
+    <comp lib="1" loc="(1600,3050)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,3040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_92"/></comp>
+    <comp lib="0" loc="(1570,3060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_128"/></comp>
+    <comp lib="0" loc="(1600,3050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_27"/></comp>
+    <comp lib="1" loc="(1860,3050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,3040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_11"/></comp>
+    <comp lib="0" loc="(1830,3060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_2"/></comp>
+    <comp lib="0" loc="(1860,3050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_228"/></comp>
+    <comp lib="1" loc="(2120,3050)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,3040)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_3"/></comp>
+    <comp lib="0" loc="(2090,3060)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_10"/></comp>
+    <comp lib="0" loc="(2120,3050)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_229"/></comp>
+    <comp lib="1" loc="(300,3150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,3140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_228"/></comp>
+    <comp lib="0" loc="(270,3160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_229"/></comp>
+    <comp lib="0" loc="(300,3150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_19"/></comp>
+    <comp lib="1" loc="(560,3150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,3140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_10"/></comp>
+    <comp lib="0" loc="(530,3160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_4"/></comp>
+    <comp lib="0" loc="(560,3150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_230"/></comp>
+    <comp lib="1" loc="(820,3150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,3140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_12"/></comp>
+    <comp lib="0" loc="(790,3160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_2"/></comp>
+    <comp lib="0" loc="(820,3150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_231"/></comp>
+    <comp lib="1" loc="(1080,3150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,3140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_11"/></comp>
+    <comp lib="0" loc="(1050,3160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_3"/></comp>
+    <comp lib="0" loc="(1080,3150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_232"/></comp>
+    <comp lib="1" loc="(1340,3150)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,3140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_231"/></comp>
+    <comp lib="0" loc="(1310,3160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_232"/></comp>
+    <comp lib="0" loc="(1340,3150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_233"/></comp>
+    <comp lib="1" loc="(1600,3150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,3140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_230"/></comp>
+    <comp lib="0" loc="(1570,3160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_233"/></comp>
+    <comp lib="0" loc="(1600,3150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_20"/></comp>
+    <comp lib="1" loc="(1860,3150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,3140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_9"/></comp>
+    <comp lib="0" loc="(1830,3160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_17"/></comp>
+    <comp lib="0" loc="(1860,3150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_234"/></comp>
+    <comp lib="1" loc="(2120,3150)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,3140)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_218"/></comp>
+    <comp lib="0" loc="(2090,3160)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_227"/></comp>
+    <comp lib="0" loc="(2120,3150)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_235"/></comp>
+    <comp lib="1" loc="(300,3250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,3240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_217"/></comp>
+    <comp lib="0" loc="(270,3260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_235"/></comp>
+    <comp lib="0" loc="(300,3250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_236"/></comp>
+    <comp lib="1" loc="(560,3250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,3240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_220"/></comp>
+    <comp lib="0" loc="(530,3260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_224"/></comp>
+    <comp lib="0" loc="(560,3250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_237"/></comp>
+    <comp lib="1" loc="(820,3250)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,3240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_225"/></comp>
+    <comp lib="0" loc="(790,3260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_237"/></comp>
+    <comp lib="0" loc="(820,3250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_238"/></comp>
+    <comp lib="1" loc="(1080,3250)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,3240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_236"/></comp>
+    <comp lib="0" loc="(1050,3260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_238"/></comp>
+    <comp lib="0" loc="(1080,3250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_239"/></comp>
+    <comp lib="1" loc="(1340,3250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,3240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_234"/></comp>
+    <comp lib="0" loc="(1310,3260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_239"/></comp>
+    <comp lib="0" loc="(1340,3250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_240"/></comp>
+    <comp lib="1" loc="(1600,3250)" name="OR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,3240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_236"/></comp>
+    <comp lib="0" loc="(1570,3260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_238"/></comp>
+    <comp lib="0" loc="(1600,3250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_241"/></comp>
+    <comp lib="1" loc="(1860,3250)" name="NOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,3240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_234"/></comp>
+    <comp lib="0" loc="(1830,3260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_239"/></comp>
+    <comp lib="0" loc="(1860,3250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_33"/></comp>
+    <comp lib="1" loc="(2120,3250)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,3240)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_241"/></comp>
+    <comp lib="0" loc="(2090,3260)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_33"/></comp>
+    <comp lib="0" loc="(2120,3250)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_242"/></comp>
+    <comp lib="1" loc="(300,3350)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,3340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_240"/></comp>
+    <comp lib="0" loc="(270,3360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_242"/></comp>
+    <comp lib="0" loc="(300,3350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_32"/></comp>
+    <comp lib="1" loc="(560,3350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,3340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_13"/></comp>
+    <comp lib="0" loc="(530,3360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_3"/></comp>
+    <comp lib="0" loc="(560,3350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_243"/></comp>
+    <comp lib="1" loc="(820,3350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,3340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_5"/></comp>
+    <comp lib="0" loc="(790,3360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_11"/></comp>
+    <comp lib="0" loc="(820,3350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_244"/></comp>
+    <comp lib="1" loc="(1080,3350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,3340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_14"/></comp>
+    <comp lib="0" loc="(1050,3360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_2"/></comp>
+    <comp lib="0" loc="(1080,3350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_245"/></comp>
+    <comp lib="1" loc="(1340,3350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,3340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_6"/></comp>
+    <comp lib="0" loc="(1310,3360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_10"/></comp>
+    <comp lib="0" loc="(1340,3350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_246"/></comp>
+    <comp lib="1" loc="(1600,3350)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,3340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_12"/></comp>
+    <comp lib="0" loc="(1570,3360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_4"/></comp>
+    <comp lib="0" loc="(1600,3350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_247"/></comp>
+    <comp lib="1" loc="(1860,3350)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,3340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_243"/></comp>
+    <comp lib="0" loc="(1830,3360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_246"/></comp>
+    <comp lib="0" loc="(1860,3350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_248"/></comp>
+    <comp lib="1" loc="(2120,3350)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,3340)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_244"/></comp>
+    <comp lib="0" loc="(2090,3360)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_247"/></comp>
+    <comp lib="0" loc="(2120,3350)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_249"/></comp>
+    <comp lib="1" loc="(300,3450)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,3440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_245"/></comp>
+    <comp lib="0" loc="(270,3460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_249"/></comp>
+    <comp lib="0" loc="(300,3450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_250"/></comp>
+    <comp lib="1" loc="(560,3450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,3440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_248"/></comp>
+    <comp lib="0" loc="(530,3460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_250"/></comp>
+    <comp lib="0" loc="(560,3450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_22"/></comp>
+    <comp lib="1" loc="(820,3450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,3440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_11"/></comp>
+    <comp lib="0" loc="(790,3460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_4"/></comp>
+    <comp lib="0" loc="(820,3450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_251"/></comp>
+    <comp lib="1" loc="(1080,3450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,3440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_12"/></comp>
+    <comp lib="0" loc="(1050,3460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_3"/></comp>
+    <comp lib="0" loc="(1080,3450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_252"/></comp>
+    <comp lib="1" loc="(1340,3450)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,3440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_251"/></comp>
+    <comp lib="0" loc="(1310,3460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_252"/></comp>
+    <comp lib="0" loc="(1340,3450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_253"/></comp>
+    <comp lib="1" loc="(1600,3450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,3440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_13"/></comp>
+    <comp lib="0" loc="(1570,3460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_2"/></comp>
+    <comp lib="0" loc="(1600,3450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_254"/></comp>
+    <comp lib="1" loc="(1860,3450)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,3440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_5"/></comp>
+    <comp lib="0" loc="(1830,3460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_10"/></comp>
+    <comp lib="0" loc="(1860,3450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_255"/></comp>
+    <comp lib="1" loc="(2120,3450)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,3440)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_254"/></comp>
+    <comp lib="0" loc="(2090,3460)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_255"/></comp>
+    <comp lib="0" loc="(2120,3450)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_256"/></comp>
+    <comp lib="1" loc="(300,3550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,3540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_253"/></comp>
+    <comp lib="0" loc="(270,3560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_256"/></comp>
+    <comp lib="0" loc="(300,3550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_21"/></comp>
+    <comp lib="1" loc="(560,3550)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,3540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_2"/></comp>
+    <comp lib="0" loc="(530,3560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_10"/></comp>
+    <comp lib="0" loc="(560,3550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_18"/></comp>
+    <comp lib="1" loc="(820,3550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,3540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_7"/></comp>
+    <comp lib="0" loc="(790,3560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_11"/></comp>
+    <comp lib="0" loc="(820,3550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_257"/></comp>
+    <comp lib="1" loc="(1080,3550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,3540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_3"/></comp>
+    <comp lib="0" loc="(1050,3560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_15"/></comp>
+    <comp lib="0" loc="(1080,3550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_258"/></comp>
+    <comp lib="1" loc="(1340,3550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,3540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_2"/></comp>
+    <comp lib="0" loc="(1310,3560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_16"/></comp>
+    <comp lib="0" loc="(1340,3550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_259"/></comp>
+    <comp lib="1" loc="(1600,3550)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,3540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_258"/></comp>
+    <comp lib="0" loc="(1570,3560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_259"/></comp>
+    <comp lib="0" loc="(1600,3550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_260"/></comp>
+    <comp lib="1" loc="(1860,3550)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,3540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_257"/></comp>
+    <comp lib="0" loc="(1830,3560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_260"/></comp>
+    <comp lib="0" loc="(1860,3550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_261"/></comp>
+    <comp lib="1" loc="(2120,3550)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,3540)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_12"/></comp>
+    <comp lib="0" loc="(2090,3560)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_6"/></comp>
+    <comp lib="0" loc="(2120,3550)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_262"/></comp>
+    <comp lib="1" loc="(300,3650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,3640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_46"/></comp>
+    <comp lib="0" loc="(270,3660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_262"/></comp>
+    <comp lib="0" loc="(300,3650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_263"/></comp>
+    <comp lib="1" loc="(560,3650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,3640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_5"/></comp>
+    <comp lib="0" loc="(530,3660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_13"/></comp>
+    <comp lib="0" loc="(560,3650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_264"/></comp>
+    <comp lib="1" loc="(820,3650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,3640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_14"/></comp>
+    <comp lib="0" loc="(790,3660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_4"/></comp>
+    <comp lib="0" loc="(820,3650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_265"/></comp>
+    <comp lib="1" loc="(1080,3650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,3640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_264"/></comp>
+    <comp lib="0" loc="(1050,3660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_265"/></comp>
+    <comp lib="0" loc="(1080,3650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_266"/></comp>
+    <comp lib="1" loc="(1340,3650)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,3640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_263"/></comp>
+    <comp lib="0" loc="(1310,3660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_266"/></comp>
+    <comp lib="0" loc="(1340,3650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_267"/></comp>
+    <comp lib="1" loc="(1600,3650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,3640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_261"/></comp>
+    <comp lib="0" loc="(1570,3660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_267"/></comp>
+    <comp lib="0" loc="(1600,3650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_24"/></comp>
+    <comp lib="1" loc="(1860,3650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,3640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_12"/></comp>
+    <comp lib="0" loc="(1830,3660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_5"/></comp>
+    <comp lib="0" loc="(1860,3650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_268"/></comp>
+    <comp lib="1" loc="(2120,3650)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,3640)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_2"/></comp>
+    <comp lib="0" loc="(2090,3660)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_15"/></comp>
+    <comp lib="0" loc="(2120,3650)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_269"/></comp>
+    <comp lib="1" loc="(300,3750)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,3740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_268"/></comp>
+    <comp lib="0" loc="(270,3760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_269"/></comp>
+    <comp lib="0" loc="(300,3750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_270"/></comp>
+    <comp lib="1" loc="(560,3750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,3740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_13"/></comp>
+    <comp lib="0" loc="(530,3760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_4"/></comp>
+    <comp lib="0" loc="(560,3750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_271"/></comp>
+    <comp lib="1" loc="(820,3750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,3740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_7"/></comp>
+    <comp lib="0" loc="(790,3760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_10"/></comp>
+    <comp lib="0" loc="(820,3750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_272"/></comp>
+    <comp lib="1" loc="(1080,3750)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,3740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_271"/></comp>
+    <comp lib="0" loc="(1050,3760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_272"/></comp>
+    <comp lib="0" loc="(1080,3750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_273"/></comp>
+    <comp lib="1" loc="(1340,3750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,3740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_11"/></comp>
+    <comp lib="0" loc="(1310,3760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_6"/></comp>
+    <comp lib="0" loc="(1340,3750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_274"/></comp>
+    <comp lib="1" loc="(1600,3750)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,3740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_14"/></comp>
+    <comp lib="0" loc="(1570,3760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_3"/></comp>
+    <comp lib="0" loc="(1600,3750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_275"/></comp>
+    <comp lib="1" loc="(1860,3750)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1830,3740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_274"/></comp>
+    <comp lib="0" loc="(1830,3760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_275"/></comp>
+    <comp lib="0" loc="(1860,3750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_276"/></comp>
+    <comp lib="1" loc="(2120,3750)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(2090,3740)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_273"/></comp>
+    <comp lib="0" loc="(2090,3760)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_276"/></comp>
+    <comp lib="0" loc="(2120,3750)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_277"/></comp>
+    <comp lib="1" loc="(300,3850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(270,3840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_270"/></comp>
+    <comp lib="0" loc="(270,3860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_277"/></comp>
+    <comp lib="0" loc="(300,3850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_23"/></comp>
+    <comp lib="1" loc="(560,3850)" name="NAND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(530,3840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_211"/></comp>
+    <comp lib="0" loc="(530,3860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_212"/></comp>
+    <comp lib="0" loc="(560,3850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_278"/></comp>
+    <comp lib="1" loc="(820,3850)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(790,3840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_214"/></comp>
+    <comp lib="0" loc="(790,3860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_278"/></comp>
+    <comp lib="0" loc="(820,3850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_30"/></comp>
+    <comp lib="1" loc="(1080,3850)" name="XOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1050,3840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_39"/></comp>
+    <comp lib="0" loc="(1050,3860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_59"/></comp>
+    <comp lib="0" loc="(1080,3850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_25"/></comp>
+    <comp lib="1" loc="(1340,3850)" name="AND Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1310,3840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_197"/></comp>
+    <comp lib="0" loc="(1310,3860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_198"/></comp>
+    <comp lib="0" loc="(1340,3850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_279"/></comp>
+    <comp lib="1" loc="(1600,3850)" name="XNOR Gate"><a name="size" val="30"/><a name="inputs" val="2"/></comp>
+    <comp lib="0" loc="(1570,3840)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_206"/></comp>
+    <comp lib="0" loc="(1570,3860)" name="Tunnel"><a name="facing" val="east"/><a name="label" val="net_279"/></comp>
+    <comp lib="0" loc="(1600,3850)" name="Tunnel"><a name="facing" val="west"/><a name="label" val="net_29"/></comp>
+  </circuit>
+  <circuit name="main">
+    <a name="appearance" val="logisim_evolution"/>
+    <a name="circuit" val="main"/>
+    <!-- Top level pins pass-through to subcircuit -->
+    <comp lib="0" loc="(120,100)" name="Pin"><a name="appearance" val="classic"/><a name="width" val="8"/><a name="label" val="A"/></comp>
+    <comp lib="0" loc="(120,100)" name="Tunnel"><a name="width" val="8"/><a name="label" val="main_A"/></comp>
+    <comp lib="0" loc="(120,140)" name="Pin"><a name="appearance" val="classic"/><a name="width" val="8"/><a name="label" val="B"/></comp>
+    <comp lib="0" loc="(120,140)" name="Tunnel"><a name="width" val="8"/><a name="label" val="main_B"/></comp>
+    <comp lib="0" loc="(400,100)" name="Tunnel"><a name="width" val="16"/><a name="label" val="main_P"/></comp>
+    <comp lib="0" loc="(400,100)" name="Pin"><a name="appearance" val="classic"/><a name="facing" val="west"/><a name="width" val="16"/><a name="label" val="P"/><a name="type" val="output"/></comp>
+  </circuit>
+</project>

@@ -1,0 +1,48 @@
+# Mode 0
+read_verilog verilog/structural_multiplier.v
+synth -top structural_multiplier
+flatten
+opt
+abc -g gates
+rename -top net_mode0
+write_json results/simulator/net_mode0.json
+
+# Mode 1
+design -reset
+read_verilog verilog/structural_multiplier.v verilog/approximate_multiplier.v verilog/synthesis_mode1.v
+synth -top synthesis_mode1
+flatten
+opt
+abc -g gates
+rename -top net_mode1
+write_json results/simulator/net_mode1.json
+
+# Mode 2
+design -reset
+read_verilog verilog/structural_multiplier.v verilog/approximate_multiplier.v verilog/synthesis_mode2.v
+synth -top synthesis_mode2
+flatten
+opt
+abc -g gates
+rename -top net_mode2
+write_json results/simulator/net_mode2.json
+
+# Mode 3
+design -reset
+read_verilog verilog/structural_multiplier.v verilog/approximate_multiplier.v verilog/synthesis_mode3.v
+synth -top synthesis_mode3
+flatten
+opt
+abc -g gates
+rename -top net_mode3
+write_json results/simulator/net_mode3.json
+
+# Configurable
+design -reset
+read_verilog verilog/structural_multiplier.v verilog/approximate_multiplier.v
+synth -top approximate_multiplier
+flatten
+opt
+abc -g gates
+rename -top net_configurable
+write_json results/simulator/net_configurable.json
